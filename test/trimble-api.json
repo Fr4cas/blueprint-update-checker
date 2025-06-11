@@ -1,0 +1,22 @@
+{
+  "projects": [
+    {
+      "name": "Building A",
+      "latestBlueprint": {
+        "name": "Level-2-Structural.pdf",
+        "version": "v3.1",
+        "url": "https://example.com/blueprints/level-2-v3.1.pdf",
+        "updatedAt": "2025-06-11"
+      }
+    },
+    {
+      "name": "Building B",
+      "latestBlueprint": {
+        "name": "Roof-Plan.pdf",
+        "version": "v1.0",
+        "url": "https://example.com/blueprints/roof-plan-v1.pdf",
+        "updatedAt": "2025-06-09"
+      }
+    }
+  ]
+}

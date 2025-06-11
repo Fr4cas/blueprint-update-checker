@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blueprint Viewer</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>藍圖版本 QR 確認器</h1>
+
+        <div class="info-card">
+            <label for="project-select"><strong>選擇項目 (Select Project):</strong></label>
+            <select id="project-select">
+                <option disabled selected>-- Select a Project --</option>
+            </select>
+
+            <p><strong>版本:</strong> <span id="version"></span></p>
+            <p><strong>最新更新:</strong> <span id="updated"></span></p>
+            <p><strong>Notes:</strong> <span id="notes"></span></p>
+            <a id="blueprint-link" href="#" target="_blank">View Blueprint</a>
+        </div>
+    </div>
+
+    <div class="qrcode-section">
+        <div id="qrcode"></div>
+    </div>
+
+    <script src="lib/qrcode.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
