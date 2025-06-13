@@ -4,64 +4,30 @@ A lightweight web app that ensures construction workers always access the **late
 
 ---
 
-##  Features
+## Features
 
--  **QR Code Generator**: Generates a QR code that links to the latest blueprint.
--  **Version Tracking**: Displays blueprint version, update date, and notes.
--  **Project Selector**: Workers can select which construction project they are working on.
--  **Simple Web Interface**: Optimized for tablets or on-site access.
-
----
-
-##  Folder Structure
-
-```
-project-root/
-│
-├── index.html             # Main entry point of the web app
-│
-├── css/
-│   └── styles.css         # Styles for layout and UI
-│
-├── js/
-│   └── main.js            # JavaScript logic for fetching data and generating QR codes
-│
-├── lib/
-│   └── qrcode.min.js      # QR code library (https://davidshimjs.github.io/qrcodejs/)
-│
-├── test/
-│   └── trimble.api.json   # Mock Trimble Connect API data (local JSON file)
-│
-└── README.md              # Project documentation (this file)
-```
+- **QR Code Generator**: Automatically generates a QR code that links to the latest uploaded blueprint (PDF).
+- **Version Tracking**: Displays blueprint version, upload date, and version status.
+- **QR Scanner Interface**: Workers can scan a code to instantly verify the blueprint’s validity.
+- **Simple Web Interface**: Optimized for desktop, tablet, and on-site mobile use.
 
 ---
 
-##  How to Use
+## Tech Stack
 
-1. Open `index.html` in any modern browser (no server needed for local testing).
-2. Select a project from the dropdown.
-3. View blueprint info and scan the QR code.
-4. Click the link to view the blueprint online (or embed it in future updates).
-
----
-
-##  Next Steps
-
-- Embed blueprint viewer (PDF.js)
-- Fetch real blueprint data from Trimble API
-- Add support for version comparison
-- Add offline cache support for remote sites
+- **Frontend**: React, HTML5 QR Scanner, QR Code Generator
+- **Backend**: Node.js, Express, Multer (for file uploads)
+- **Storage**: Local file system (can be extended to cloud storage)
 
 ---
 
-##  Languages
+## Languages
 
-- Interface: English + Traditional Chinese  
-- Code: HTML, CSS, JavaScript
+- Interface: English + Traditional Chinese (planned)
+- Code: JavaScript (React, Node.js)
 
 ---
 
-##  Status
+## Status
 
-**In development** — Trimble API access pending. Mock data currently used.
+**Actively being rebuilt** — Project was reset from a legacy JS/CSS version to a modern full stack architecture.
