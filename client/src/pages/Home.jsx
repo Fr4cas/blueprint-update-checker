@@ -1,32 +1,26 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import '../css/Home.css';
+import Footer from '../components/Footer';
 
 function Home() {
   const navigate = useNavigate();
 
   return (
-    <div>
-      <h1>🏗️ Blueprint QR Viewer</h1>
-      <p>Welcome! What would you like to do?</p>
+    <div className="home-container">
+      <h1 className="home-title">Blueprint QR Viewer</h1>
+      <p className="home-subtitle">Welcome! What would you like to do?</p>
 
-      <div>
-        <button onClick={() => navigate('/upload')}>
-          📤 Upload a New Blueprint
+      <div className="home-buttons">
+        <button className="home-button" onClick={() => navigate('/upload')}>
+          Upload a Blueprint
         </button>
-        <button onClick={() => navigate('/scan')}>
-          📷 Scan a QR Code
+        <button className="home-button" onClick={() => navigate('/scan')}>
+          Scan a QR Code
         </button>
       </div>
 
-      <footer>
-        <p>
-          Version: 0.1 MVP | Language:
-          <select>
-            <option>EN</option>
-            <option>繁體</option>
-          </select>
-        </p>
-      </footer>
+      <Footer/>
     </div>
   );
 }
