@@ -7,8 +7,15 @@ import '../css/Home.css';
 // Components
 import Footer from '../components/Footer';
 
+// =========================================================================================
+// js section start
+
 function Home() {
   const navigate = useNavigate();
+
+//  js section end
+// =========================================================================================
+//  html section start 
 
   return (
     <div className="home-container">
@@ -28,5 +35,8 @@ function Home() {
     </div>
   );
 }
+
+// html section end
+// =========================================================================================
 
 export default Home;

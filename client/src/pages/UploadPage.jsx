@@ -6,25 +6,32 @@ import '../css/UploadPage.css'
 // Components
 import Footer from '../components/Footer';
 
+// =========================================================================================
+// js section start
 
 function UploadPage() {
+    // States to hold information
     const [selectedFile, setSelectedFile] = useState(null);
     const [version, setVersion] = useState('');
     const [notes, setNotes] = useState('');
 
+    // Called when user selects a file
     const handleFileChange = (e) => {
         setSelectedFile(e.target.files[0]);
     };
 
+    // Called when form is submitted
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault(); // Prevents page from reloading on form submit
 
+        // Prepare form data to send to backend
         const formData = new FormData();
         formData.append('file', selectedFile);
         formData.append('version', version);
         formData.append('notes', notes);
 
         try {
+            // Send form data to backend upload endpoint
             const res = await fetch('http://localhost:5000/upload', {
                 method: 'POST',
                 body: formData,
@@ -32,17 +39,24 @@ function UploadPage() {
 
             const data = await res.json();
 
+            // Notify user of successful upload
             if (data.status === 'success') {
                 alert(`Upload successful! File URL:\n${data.fileUrl}`);
-                
+
+            // Notify user of failed upload
             } else {
                 alert('Upload failed.');
             }
+        // Log and alert on error    
         } catch (err) {
             console.error('Error uploading:', err);
             alert('An error occurred during upload.');
         }
     };
+
+//  js section end
+// =========================================================================================
+//  html section start 
 
     return (
         <>
@@ -79,5 +93,8 @@ function UploadPage() {
 
     );
 }
+
+// html section end
+// =========================================================================================
 
 export default UploadPage;
