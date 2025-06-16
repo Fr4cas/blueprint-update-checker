@@ -1,6 +1,5 @@
 // Server index.js
 
-
 // Required modules
 const express = require('express');
 const cors = require('cors');
@@ -25,8 +24,10 @@ if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir);
 const storage = multer.diskStorage({
   destination: uploadDir, // Save uploaded files to /uploads
   filename: (req, file, cb) => {
-    const uniqueName = `${Date.now()}_${file.originalname}`; // Rename file using timestamp to avoid name collisions
-    cb(null, uniqueName);
+    const now = new Date();
+  const timestamp = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}_${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}${String(now.getSeconds()).padStart(2, '0')}`;
+  const uniqueName = `${timestamp}_${file.originalname}`;
+  cb(null, uniqueName);
   },
 });
 
