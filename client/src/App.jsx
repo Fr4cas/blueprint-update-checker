@@ -1,11 +1,13 @@
 import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+
+import Home from './pages/Home.jsx';
 
 function App() {
   return (
-    <div>
-      <h1>QR Blueprint Tracker</h1>
-      <p>Upload PDFs and verify blueprint versions with QR codes.</p>
-    </div>
+    <Routes>
+      <Route path="/" element={<Home />} />
+    </Routes>
   );
 }
 
