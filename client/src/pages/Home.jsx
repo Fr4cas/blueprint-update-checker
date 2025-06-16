@@ -1,6 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+
+// css
 import '../css/Home.css';
+
+// Components
 import Footer from '../components/Footer';
 
 function Home() {

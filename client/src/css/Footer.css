@@ -1,9 +1,12 @@
-.home-footer {
+.footer {
   font-size: 0.8rem;
   color: #888;
   margin-top: 2rem;
+  text-align: center;
+  padding: 2rem 1rem;
+  border-top: 1px solid #eee;
 }
 
-.home-select {
+.select {
   margin-left: 0.5rem;
 }
