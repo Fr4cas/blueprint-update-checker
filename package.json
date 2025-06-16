@@ -3,5 +3,28 @@
     "html5-qrcode": "^2.3.8",
     "qrcode.react": "^4.2.0",
     "react-router-dom": "^7.6.2"
-  }
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "name": "blueprintupdatechecker",
+  "version": "1.0.0",
+  "description": "A lightweight web app that ensures construction workers always access the **latest blueprint version** using a **QR code**. Designed for clarity, speed, and ease of use on-site.",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "client": "npm --prefix client start",
+    "server": "npm --prefix server start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fr4cas/blueprintUpdateChecker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Fr4cas/blueprintUpdateChecker/issues"
+  },
+  "homepage": "https://github.com/Fr4cas/blueprintUpdateChecker#readme"
 }

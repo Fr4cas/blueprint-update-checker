@@ -16,15 +16,32 @@ function UploadPage() {
         setSelectedFile(e.target.files[0]);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Submitting:', {
-            file: selectedFile,
-            version,
-            notes,
-        });
 
-        // TODO: Hook up to backend later
+        const formData = new FormData();
+        formData.append('file', selectedFile);
+        formData.append('version', version);
+        formData.append('notes', notes);
+
+        try {
+            const res = await fetch('http://localhost:5000/upload', {
+                method: 'POST',
+                body: formData,
+            });
+
+            const data = await res.json();
+
+            if (data.status === 'success') {
+                alert(`Upload successful! File URL:\n${data.fileUrl}`);
+                
+            } else {
+                alert('Upload failed.');
+            }
+        } catch (err) {
+            console.error('Error uploading:', err);
+            alert('An error occurred during upload.');
+        }
     };
 
     return (
