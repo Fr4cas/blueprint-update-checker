@@ -14,10 +14,11 @@ import { Html5Qrcode } from 'html5-qrcode';
 
 function ScanPage() {
 
-    const scannerRef = useRef(null); // Reference to the scanner container
-    const html5QrcodeScanner = useRef(null); // Stores scanner instance
-    const [scanResult, setScanResult] = useState(null); // Holds scanned QR result
-    const [scanError, setScanError] = useState(''); 
+    // state and ref initialization
+    const scannerRef = useRef(null); // point to html where scanner will render
+    const html5QrcodeScanner = useRef(null); // hold instance of scanner
+    const [scanResult, setScanResult] = useState(null); // store text (URL from QR code)
+    const [scanError, setScanError] = useState('');  // errors
 
     useEffect(() => {
 

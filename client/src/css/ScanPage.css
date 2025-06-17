@@ -1,13 +1,15 @@
 .scan-container {
   text-align: center;
-  padding: 2rem;
+  padding: 3rem;
+  margin: 4rem auto;
 }
 
 .scanner-box {
   margin: 1rem auto;
   width: 300px;
   height: 300px;
-  border: 2px solid #ccc;
+  border: 2px dashed #ccc;
+  margin-bottom: 2rem;
 }
 
 .scan-result {
