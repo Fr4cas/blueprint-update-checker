@@ -20,7 +20,7 @@ function UploadPage() {
         setSelectedFile(e.target.files[0]);
     };
 
-    // Called when form is submitted
+    /* ====== Handle form submition - start ====== */
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevents page from reloading on form submit
 
@@ -53,6 +53,7 @@ function UploadPage() {
             alert('An error occurred during upload.');
         }
     };
+    /* ====== Handle form submition - end ======= */
 
 //  js section end
 // =========================================================================================
