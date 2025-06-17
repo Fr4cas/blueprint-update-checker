@@ -50,7 +50,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
     return res.status(400).json({ error: 'No file uploaded.' });
   }
 
-  // Generate URL to access the uploaded file
+  // Generate URL to access the uploaded file with QR code later
   const fileUrl = `http://localhost:${PORT}/uploads/${file.filename}`;
 
   // Metadata object

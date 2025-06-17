@@ -86,8 +86,7 @@ function UploadPage() {
                 {selectedFile && (
                     <p className="upload-preview">Selected: {selectedFile.name}</p>
                 )}
-            </div>
-            <div>
+
                 <Footer />
             </div>
         </>
