@@ -12,6 +12,7 @@ dist/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 
 # ========== Runtime files ========== #
 .pnp/
@@ -28,22 +29,40 @@ client/coverage/
 .env.test.local
 .env.production.local
 
+client/.env
 client/.env.local
 client/.env.development.local
 client/.env.test.local
 client/.env.production.local
 
+server/.env
+server/.env.local
+server/.env.development.local
+server/.env.test.local
+server/.env.production.local
+
 # ========== System & Editor junk ========== #
 .DS_Store
 Thumbs.db
 *.swp
+*.swo
+*.idea/
+*.vscode/
+*.log
 
 client/.DS_Store
+server/.DS_Store
 
-# ========== Uploaded files ========== #
+# ========== Uploaded files & generated metadata ========== #
 server/uploads/
+server/metadata/
 
-# ========== Vite/Next/Vercel/etc (if added later) ========== #
+# ========== Vite/Next/Vercel/etc ========== #
 .vite/
 .next/
 .vercel/
+out/
+
+# ========== Temporary files ========== #
+*.tmp
+*.temp

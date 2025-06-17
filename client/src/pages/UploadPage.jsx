@@ -10,6 +10,7 @@ import Footer from '../components/Footer';
 // js section start
 
 function UploadPage() {
+
     // States to hold information
     const [selectedFile, setSelectedFile] = useState(null);
     const [version, setVersion] = useState('');
@@ -43,11 +44,11 @@ function UploadPage() {
             if (data.status === 'success') {
                 alert(`Upload successful! File URL:\n${data.fileUrl}`);
 
-            // Notify user of failed upload
+                // Notify user of failed upload
             } else {
                 alert('Upload failed.');
             }
-        // Log and alert on error    
+            // Log and alert on error    
         } catch (err) {
             console.error('Error uploading:', err);
             alert('An error occurred during upload.');
@@ -55,9 +56,9 @@ function UploadPage() {
     };
     /* ====== Handle form submition - end ======= */
 
-//  js section end
-// =========================================================================================
-//  html section start 
+    //  js section end
+    // =========================================================================================
+    //  html section start 
 
     return (
         <>
@@ -92,6 +93,7 @@ function UploadPage() {
         </>
 
     );
+
 }
 
 // html section end
