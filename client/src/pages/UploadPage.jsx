@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 
+// assets
+import UploadIcon from "../assets/upload.svg";
+
 // css
 import '../css/UploadPage.css'
 
-// Components
+// components
 import Footer from '../components/Footer';
 
 // =========================================================================================
@@ -81,7 +84,10 @@ function UploadPage() {
                         <textarea value={notes} onChange={(e) => setNotes(e.target.value)} />
                     </div>
 
-                    <button type="submit" disabled={!selectedFile}>Upload Blueprint</button>
+                    <button type="submit" disabled={!selectedFile}>
+                        <img src={UploadIcon} alt="Upload icon" className="icon" />
+                        Upload Blueprint
+                    </button>
                 </form>
 
                 {selectedFile && (

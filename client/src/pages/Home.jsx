@@ -1,10 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
+// assets
+import AttachIcon from "../assets/attach.svg";
+import ScanIcon from "../assets/scan.svg";
+
 // css
 import '../css/Home.css';
 
-// Components
+// components
 import Footer from '../components/Footer';
 
 // =========================================================================================
@@ -25,9 +29,11 @@ function Home() {
 
         <div className="home-buttons">
           <button className="home-button" onClick={() => navigate('/upload')}>
+            <img src={AttachIcon} alt="Attach icon" className='icon' />
             QR Attacher
           </button>
           <button className="home-button" onClick={() => navigate('/scan')}>
+            <img src={ScanIcon} alt="Scan icon" className='icon' />
             Scanner
           </button>
         </div>
