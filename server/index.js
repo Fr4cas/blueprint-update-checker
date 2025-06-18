@@ -6,10 +6,13 @@ const cors = require('cors');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const { PDFDocument, rgb } = require('pdf-lib');
+const QRCode = require('qrcode');
 
 // Initialize app
 const app = express();
 const PORT = 5000;
+const router = express.Router
 
 // Handles requests
 app.use(cors());

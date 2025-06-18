@@ -76,8 +76,8 @@ function ScanPage() {
     return (
         <>
             <div className="scan-container">
-                <h1>Scan Blueprint QR Code</h1>
-                <p>Use your camera to scan the QR code on the blueprint.</p>
+                <h1>Scan QR Code</h1>
+                <p>Check Version</p>
 
                 {!scanResult ? (
                     <>

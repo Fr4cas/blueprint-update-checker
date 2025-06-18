@@ -63,7 +63,7 @@ function UploadPage() {
     return (
         <>
             <div className="upload-container">
-                <h1> Upload a New Blueprint</h1>
+                <h1> Attach QR Code </h1>
 
                 <form onSubmit={handleSubmit} className="upload-form">
                     <div>

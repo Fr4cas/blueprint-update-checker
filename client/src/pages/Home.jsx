@@ -25,10 +25,10 @@ function Home() {
 
         <div className="home-buttons">
           <button className="home-button" onClick={() => navigate('/upload')}>
-            Upload a Blueprint
+            QR Attacher
           </button>
           <button className="home-button" onClick={() => navigate('/scan')}>
-            Scan a QR Code
+            Scanner
           </button>
         </div>
       </div>
