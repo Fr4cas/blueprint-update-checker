@@ -20,6 +20,7 @@ function UploadPage() {
     const [notes, setNotes] = useState('');
     const [statusMessage, setStatusMessage] = useState('');
     const [statusType, setStatusType] = useState('');
+    const [downloadUrl, setDownloadUrl] = useState('');
 
     // Called when user selects a file
     const handleFileChange = (e) => {
@@ -49,6 +50,7 @@ function UploadPage() {
             if (data.status === 'success') {
                 setStatusType('success');
                 setStatusMessage('Upload Successful!');
+                setDownloadUrl(data.fileUrl);
 
                 // Notify user of failed upload
             } else {
@@ -94,15 +96,23 @@ function UploadPage() {
                     </button>
                 </form>
 
-                {statusMessage && (
-                    <div className={`upload-status ${statusType}`}>
-                        {statusMessage}
-                    </div>
-                )}
+                <div className="after-form">
+                    {downloadUrl && (
+                        <a href={downloadUrl} download className="download-button">
+                            Download
+                        </a>
+                    )}
 
-                {selectedFile && (
-                    <p className="upload-preview">Selected: {selectedFile.name}</p>
-                )}
+                    {statusMessage && (
+                        <div className={`upload-status ${statusType}`}>
+                            {statusMessage}
+                        </div>
+                    )}
+
+                    {selectedFile && (
+                        <p className="upload-preview">Uploaded: {selectedFile.name}</p>
+                    )}
+                </div>
 
                 <Footer />
             </div>
