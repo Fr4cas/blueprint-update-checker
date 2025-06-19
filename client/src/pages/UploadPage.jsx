@@ -18,6 +18,8 @@ function UploadPage() {
     const [selectedFile, setSelectedFile] = useState(null);
     const [version, setVersion] = useState('');
     const [notes, setNotes] = useState('');
+    const [statusMessage, setStatusMessage] = useState('');
+    const [statusType, setStatusType] = useState('');
 
     // Called when user selects a file
     const handleFileChange = (e) => {
@@ -45,16 +47,18 @@ function UploadPage() {
 
             // Notify user of successful upload
             if (data.status === 'success') {
-                alert(`Upload successful! File URL:\n${data.fileUrl}`);
+                setStatusType('success');
+                setStatusMessage('Upload Successful!');
 
                 // Notify user of failed upload
             } else {
-                alert('Upload failed.');
+                setStatusType('error');
+                setStatusMessage('Upload Failed. Make sure file is a PDF.')
             }
             // Log and alert on error    
         } catch (err) {
-            console.error('Error uploading:', err);
-            alert('An error occurred during upload.');
+            setStatusType('error');
+            setStatusMessage('Error During Upload. Make sure file is a PDF.');
         }
     };
     /* ====== Handle form submition - end ======= */
@@ -89,6 +93,12 @@ function UploadPage() {
                         Upload Blueprint
                     </button>
                 </form>
+
+                {statusMessage && (
+                    <div className={`upload-status ${statusType}`}>
+                        {statusMessage}
+                    </div>
+                )}
 
                 {selectedFile && (
                     <p className="upload-preview">Selected: {selectedFile.name}</p>

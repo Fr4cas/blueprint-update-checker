@@ -29,11 +29,11 @@ const storage = multer.diskStorage({
   destination: uploadDir, // Save uploaded files to /uploads
   filename: (req, file, cb) => {
     const now = new Date();
-  // Time + file name = new name
-  const timestamp = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}_${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}${String(now.getSeconds()).padStart(2, '0')}`;
+    // Time + file name = new name
+    const timestamp = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}_${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}${String(now.getSeconds()).padStart(2, '0')}`;
 
-  const uniqueName = `${timestamp}_${file.originalname}`;
-  cb(null, uniqueName);
+    const uniqueName = `${timestamp}_${file.originalname}`;
+    cb(null, uniqueName);
   },
 });
 
@@ -41,9 +41,6 @@ const upload = multer({ storage });
 /* ====== Data saving path and name - end ====== */
 
 /* ====== Handle file upload + Save metadata + QR embed - start ====== */
-const metadataDir = path.join(__dirname, 'metadata');
-if(!fs.existsSync(metadataDir)) fs.mkdirSync(metadataDir);
-
 app.post('/upload', upload.single('file'), async (req, res) => {
   const { version, notes } = req.body;
   const file = req.file;
@@ -81,6 +78,9 @@ app.post('/upload', upload.single('file'), async (req, res) => {
   /* ====== Load PDF and embed QR section - end */
 
   /* ====== Metadata section - start */
+  const metadataDir = path.join(__dirname, 'metadata');
+  if (!fs.existsSync(metadataDir)) fs.mkdirSync(metadataDir);
+
   // Metadata object
   const metadata = {
     file: file.filename,
