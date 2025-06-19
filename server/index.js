@@ -40,11 +40,11 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 /* ====== Data saving path and name - end ====== */
 
-/* ====== Handle file upload + Save metadata - start ====== */
+/* ====== Handle file upload + Save metadata + QR embed - start ====== */
 const metadataDir = path.join(__dirname, 'metadata');
 if(!fs.existsSync(metadataDir)) fs.mkdirSync(metadataDir);
 
-app.post('/upload', upload.single('file'), (req, res) => {
+app.post('/upload', upload.single('file'), async (req, res) => {
   const { version, notes } = req.body;
   const file = req.file;
 
@@ -54,8 +54,33 @@ app.post('/upload', upload.single('file'), (req, res) => {
   }
 
   // Generate URL to access the uploaded file with QR code later
+  const filePath = path.join(uploadDir, file.filename);
   const fileUrl = `http://localhost:${PORT}/uploads/${file.filename}`;
+  const qrDataUrl = await QRCode.toDataURL(fileUrl);
 
+  /* ====== Load PDF and embed QR section - start */
+  const existingPdfBytes = fs.readFileSync(filePath);
+  const pdfDoc = await PDFDocument.load(existingPdfBytes);
+  const pngImage = await pdfDoc.embedPng(qrDataUrl);
+  const page = pdfDoc.getPages()[0];
+  const { width, height } = page.getSize();
+
+  // Code position
+  const qrSize = 100;
+  page.drawImage(pngImage, {
+    x: width - qrSize - 50,
+    y: 50,
+    width: qrSize,
+    height: qrSize
+  });
+
+  // Save updated Pdf
+  const modifiedPdfBytes = await pdfDoc.save();
+  fs.writeFileSync(filePath, modifiedPdfBytes);
+
+  /* ====== Load PDF and embed QR section - end */
+
+  /* ====== Metadata section - start */
   // Metadata object
   const metadata = {
     file: file.filename,
@@ -76,7 +101,9 @@ app.post('/upload', upload.single('file'), (req, res) => {
     fileUrl,
     ...metadata
   });
+  /* ====== Metadata section - start */
 });
+
 /* ====== Handle file upload + Save metadata- end ======*/
 
 app.get('/', (req, res) => {
