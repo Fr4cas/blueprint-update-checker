@@ -118,26 +118,34 @@ app.post('/auth/token', async (req, res) => {
   };
 
   // Route to exchange code for token
-  const response = await fetch('https://id.trimble.com/oauth/token', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: new URLSearchParams({
-      grant_type: 'authorization_code',
-      code: code,
-      redirect_uri: 'http://localhost',
-      client_id: process.env.TRIMBLE_CLIENT_ID,
-      client_secret: process.env.TRIMBLE_CLIENT_SECRET,
-    }),
-  });
 
-  const data = await response.json();
-  if (data.error) {
-    return res.status(400).json({ error: data.error, description: data.error_description });
+  try {
+    const response = await fetch('https://id.trimble.com/oauth/token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        grant_type: 'authorization_code',
+        code: code,
+        redirect_uri: 'http://localhost',
+        client_id: process.env.TRIMBLE_CLIENT_ID,
+        client_secret: process.env.TRIMBLE_CLIENT_SECRET,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (data.error) {
+      return res.status(400).json({ error: data.error, description: data.error_description });
+    }
+
+    res.json(data);
+  } catch (err) {
+    console.error('Fetch error', err);
+    res.status(500).json({ error: 'Roken request failed'});
   }
 
-  res.json(data);
 });
 
 // Get route for browser/ debugging
