@@ -117,6 +117,7 @@ app.post('/auth/token', async (req, res) => {
     return res.status(400).json({ error: ' Authorization code missing ' });
   };
 
+  // Route to exchange code for token
   const response = await fetch('https://id.trimble.com/oauth/token', {
     method: 'POST',
     headers: {
@@ -139,6 +140,7 @@ app.post('/auth/token', async (req, res) => {
   res.json(data);
 });
 
+// Get route for browser/ debugging
 app.get('/auth/token', (req, res) => {
   res.send('This route only supports POST. Please send a POST request with a code in the body.');
 });
