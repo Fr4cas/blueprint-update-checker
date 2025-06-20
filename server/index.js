@@ -108,7 +108,10 @@ app.post('/upload', upload.single('file'), async (req, res) => {
 /* ====== Handle file upload + Save metadata - end ======*/
 
 /* ====== API access - start ======*/
+app.post('/auth/token', async (req, res) => {
+  res.send('OAuth Token endpoint not yet implemented');
 
+});
 
 app.get('/', (req, res) => {
   res.send('API is running');
