@@ -8,6 +8,7 @@ const path = require('path');
 const fs = require('fs');
 const { PDFDocument, rgb } = require('pdf-lib');
 const QRCode = require('qrcode');
+require('dotenv').config();
 
 // Initialize app
 const app = express();
@@ -104,7 +105,10 @@ app.post('/upload', upload.single('file'), async (req, res) => {
   /* ====== Metadata section - start */
 });
 
-/* ====== Handle file upload + Save metadata- end ======*/
+/* ====== Handle file upload + Save metadata - end ======*/
+
+/* ====== API access - start ======*/
+
 
 app.get('/', (req, res) => {
   res.send('API is running');
