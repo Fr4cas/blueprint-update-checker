@@ -109,7 +109,13 @@ app.post('/upload', upload.single('file'), async (req, res) => {
 
 /* ====== API access - start ======*/
 app.post('/auth/token', async (req, res) => {
-  res.send('OAuth Token endpoint not yet implemented');
+const { code } = req.body;
+
+if (!code) {
+  return res.status(400).json({error: ' Autherization code missing '});
+}
+
+  res.send('Code received, token exchange not yet implemented');
 
 });
 
