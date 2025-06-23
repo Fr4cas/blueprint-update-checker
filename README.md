@@ -28,6 +28,12 @@ A lightweight web app that ensures construction workers always access the **late
 
 ---
 
+## Licensing
+
+This project uses the Trimble Connect SDK under the [Trimble Internal Use License](./LICENSE.trimble.txt). This limits use to internal applications and requires compliance with Trimble's API terms.
+
+---
+
 ## Status
 
 **Actively being rebuilt** — Project was reset from a legacy JS/CSS version to a modern full stack architecture.
