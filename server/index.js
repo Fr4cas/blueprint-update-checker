@@ -118,7 +118,6 @@ app.post('/auth/token', async (req, res) => {
   };
 
   // Route to exchange code for token
-
   try {
     const response = await fetch('https://id.trimble.com/oauth/token', {
       method: 'POST',
@@ -143,9 +142,47 @@ app.post('/auth/token', async (req, res) => {
     res.json(data);
   } catch (err) {
     console.error('Fetch error', err);
-    res.status(500).json({ error: 'Roken request failed'});
+    res.status(500).json({ error: 'Token request failed' });
   }
 
+});
+
+// Refresh token flow
+async function getAccessTokenFromRefresh() {
+  const refreshToken = process.env.TRIMBLE_REFRESH_TOKEN;
+
+  const response = await fetch('https://id.trimble.com/oauth/token', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: new URLSearchParams({
+      grant_type: 'refresh_token',
+      refresh_token: refreshToken,
+      client_id: process.env.TRIMBLE_CLIENT_ID,
+      client_secret: process.env.TRIMBLE_CLIENT_SECRET,
+    }),
+  });
+
+  const data = await response.json();
+
+  if (data.error) {
+    console.error('Failed to refresh token:', data.error_description || data.error);
+    throw new Error(data.error_description || 'Unknown error during refresh');
+  }
+
+  return data.access_token;
+}
+
+app.get('/api/test-refresh', async (req, res) => {
+  console.log('GET /api/test-refresh triggered');
+  try {
+    const accessToken = await getAccessTokenFromRefresh();
+    res.json({ access_token: accessToken });
+  } catch (err) {
+    console.error('Token refresh error:', err.message);
+    res.status(500).json({ error: 'Refresh failed', details: err.message });
+  }
 });
 
 // Get route for browser/ debugging
