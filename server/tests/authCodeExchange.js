@@ -1,7 +1,7 @@
 require('dotenv').config();
 const { exchangeAuthCodeForToken } = require('../auth');
 
-const code = 'us_f92bb56b8bbf4604b4f4239f9e5c8394'; 
+const code = 'us_695003bdd8bf44dc9f112ad8523a3877'; // must retrieve code manually for test using link in env
 
 exchangeAuthCodeForToken(code)
   .then(data => {
