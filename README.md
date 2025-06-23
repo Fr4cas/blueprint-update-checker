@@ -10,6 +10,7 @@ A lightweight web app that ensures construction workers always access the **late
 - **Version Tracking**: Displays blueprint version, upload date, and version status.
 - **QR Scanner Interface**: Workers can scan a code to instantly verify the blueprint’s validity.
 - **Simple Web Interface**: Optimized for desktop, tablet, and on-site mobile use.
+- **Trimble Connect API Integration**: Securely accessess bluepreint data via Trimble's OAuth-protected APIs using stored refresh tokens.
 
 ---
 
@@ -18,6 +19,15 @@ A lightweight web app that ensures construction workers always access the **late
 - **Frontend**: React, HTML5 QR Scanner, QR Code Generator
 - **Backend**: Node.js, Express, Multer (for file uploads)
 - **Storage**: Local file system (can be extended to cloud storage)
+- **Auth**: Trimble OAuth 2.0 (authorization_code + refresh token flow)
+
+---
+
+## API Intergration (Trimble Connect)
+
+- Access tokens are refreshed automatically before API requests.
+- API usage complies with [Trimble’s SDK License](https://www.trimble.com/en/products/trimble-connect/sdk-iu-license-agreement).
+- Secrets and tokens are stored in .env
 
 ---
 
