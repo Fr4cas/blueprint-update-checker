@@ -17,9 +17,16 @@ A lightweight web app that ensures construction workers always access the **late
 ## Tech Stack
 
 - **Frontend**: React, HTML5 QR Scanner, QR Code Generator
-- **Backend**: Node.js, Express, Multer (for file uploads)
+- **Backend**: 
+  - Node.js + Express (core server framework)
+  - Multer (file upload handling)
+  - CORS (cross-origin request support)
+  - dotenv (environment variable config)
+  - node-fetch (Trimble API requests via OAuth)
+  - pdf-lib (PDF QR code embedding)
+  - qrcode (generate QR image from link)
 - **Storage**: Local file system (can be extended to cloud storage)
-- **Auth**: Trimble OAuth 2.0 (authorization_code + refresh token flow)
+- **Authentication**: Trimble OAuth 2.0 (`refresh_token` flow)
 
 ---
 
