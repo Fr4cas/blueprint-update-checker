@@ -31,28 +31,31 @@ async function exchangeAuthCodeForToken(code) {
 
 /* ====== Refresh token flow - start ======*/
 async function getAccessTokenFromRefresh() {
-    const refreshToken = process.env.TRIMBLE_REFRESH_TOKEN;
+  const refreshToken = process.env.TRIMBLE_REFRESH_TOKEN;
 
-    const response = await fetch('https://id.trimble.com/oauth/token', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({
-            grant_type: 'refresh_token',
-            refresh_token: refreshToken,
-            client_id: process.env.TRIMBLE_CLIENT_ID,
-            client_secret: process.env.TRIMBLE_CLIENT_SECRET,
-        }),
-    });
+  const response = await fetch('https://id.trimble.com/oauth/token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({
+      grant_type: 'refresh_token',
+      refresh_token: refreshToken,
+      client_id: process.env.TRIMBLE_CLIENT_ID,
+      client_secret: process.env.TRIMBLE_CLIENT_SECRET,
+    }),
+  });
 
-    const data = await response.json();
+  const data = await response.json();
 
-    if (data.error) {
-        console.error('Failed to refresh token:', data.error_description || data.error);
-        throw new Error(data.error_description || 'Unknown error during refresh');
-    }
+  if (data.error) {
+    console.error('Failed to refresh token:', data.error_description || data.error);
+    throw new Error(data.error_description || 'Unknown error during refresh');
+  }
 
-    return data.access_token;
+  return data.access_token;
 }
 /* ====== Refresh token flow - end ======*/
 
-module.exports = { getAccessTokenFromRefresh };
+module.exports = {
+  getAccessTokenFromRefresh,
+  exchangeAuthCodeForToken,
+};
