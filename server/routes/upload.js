@@ -8,16 +8,29 @@ const QRCode = require('qrcode');
 const router = express.Router();
 
 /* ====== Directory setup - start ====== */
-const uploadDir = path.join(__dirname, '../uploads');
-const metadataDir = path.join(__dirname, '../metadata');
+const baseUploadDir = path.join(__dirname, '../uploads/projects');
+const baseMetadataDir = path.join(__dirname, '../metadata');
 
-if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir);
-if (!fs.existsSync(metadataDir)) fs.mkdirSync(metadataDir);
+if (!fs.existsSync(baseUploadDir)) fs.mkdirSync(baseUploadDir, { recursive: true });
+if (!fs.existsSync(baseMetadataDir)) fs.mkdirSync(baseMetadataDir, { recursive: true });
 /* ====== Directory setup - end ====== */
 
 /* ====== Multer config - start ====== */
 const storage = multer.diskStorage({
-  destination: uploadDir,
+  destination: (req, file, cb) => {
+    const project = req.body.project;
+    if (!project) {
+      return cb(new Error('Project not specified'), null);
+    }
+
+    const projectDir = path.join(baseUploadDir, project);
+
+    if (!fs.existsSync(projectDir)) {
+      fs.mkdirSync(projectDir, { recursive: true });
+    }
+
+    cb(null, projectDir);
+  },
   filename: (req, file, cb) => {
     const now = new Date();
     const timestamp = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}_${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}${String(now.getSeconds()).padStart(2, '0')}`;
@@ -39,18 +52,19 @@ const upload = multer({ storage, fileFilter });
 /* ====== Upload endpoint - start ====== */
 router.post('/', upload.single('file'), async (req, res) => {
   try {
-    const { version, notes } = req.body;
+    const { version, notes, project } = req.body;
     const file = req.file;
 
-    if (!file) {
-      return res.status(400).json({ error: 'No file uploaded.' });
+    if (!file || !project) {
+      return res.status(400).json({ error: 'Missing file or project.' });
     }
 
-    const filePath = path.join(uploadDir, file.filename);
-    const fileUrl = `${req.protocol}://${req.get('host')}/uploads/${file.filename}`;
+    const projectDir = path.join(baseUploadDir, project);
+    const filePath = path.join(projectDir, file.filename);
+    const fileUrl = `${req.protocol}://${req.get('host')}/uploads/projects/${project}/${file.filename}`;
     const qrDataUrl = await QRCode.toDataURL(fileUrl);
 
-    // Load and embed QR into PDF
+    // Embed QR Code into PDF
     const existingPdfBytes = fs.readFileSync(filePath);
     const pdfDoc = await PDFDocument.load(existingPdfBytes);
     const pngImage = await pdfDoc.embedPng(qrDataUrl);
@@ -68,6 +82,11 @@ router.post('/', upload.single('file'), async (req, res) => {
     fs.writeFileSync(filePath, modifiedPdfBytes);
 
     // Save metadata
+    const metadataProjectDir = path.join(baseMetadataDir, project);
+    if (!fs.existsSync(metadataProjectDir)) {
+      fs.mkdirSync(metadataProjectDir, { recursive: true });
+    }
+
     const metadata = {
       file: file.filename,
       originalName: file.originalname,
@@ -77,7 +96,7 @@ router.post('/', upload.single('file'), async (req, res) => {
     };
 
     const metadataFilename = file.filename.replace(/\.pdf$/i, '.json');
-    const metadataPath = path.join(metadataDir, metadataFilename);
+    const metadataPath = path.join(metadataProjectDir, metadataFilename);
     fs.writeFileSync(metadataPath, JSON.stringify(metadata, null, 2));
 
     res.json({
@@ -91,6 +110,22 @@ router.post('/', upload.single('file'), async (req, res) => {
     res.status(500).json({ status: 'error', message: 'Server error during upload.' });
   }
 });
+
+// Get project folders
+router.get('/projects', (req, res) => {
+  const projectsDir = path.join(__dirname, '../uploads/projects');
+
+  fs.readdir(projectsDir, { withFileTypes: true }, (err, files) => {
+    if (err) return res.status(500).json({ error: 'Could not list project folders' });
+
+    const folders = files
+      .filter(file => file.isDirectory())
+      .map(dir => ({ id: dir.name, name: dir.name }));
+
+    res.json(folders);
+  });
+});
+
 /* ====== Upload endpoint - end ====== */
 
 module.exports = router;

@@ -5,6 +5,7 @@ const path = require('path');
 // Routes
 const uploadRoute = require('./routes/upload');
 const scanRoute = require('./routes/scan');
+const projectsRoute = require('./routes/projects');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -17,6 +18,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // Use routes
 app.use('/upload', uploadRoute);
 app.use('/scan', scanRoute);
+app.use('/projects', projectsRoute);
 
 app.get('/', (req, res) => {
   res.send('API is running');

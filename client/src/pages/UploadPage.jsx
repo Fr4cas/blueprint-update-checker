@@ -32,6 +32,7 @@ function UploadPage() {
         e.preventDefault();
 
         const formData = new FormData();
+        formData.append('project', selectedProject);
         formData.append('file', selectedFile);
 
         try {
@@ -55,6 +56,22 @@ function UploadPage() {
             setStatusMessage('Error During Upload. Make sure file is a PDF.');
         }
     };
+
+    // Fetch project folders
+    useEffect(() => {
+        const fetchProjects = async () => {
+            try {
+                const res = await fetch('http://localhost:5000/projects');
+                const data = await res.json();
+                setProjects(data);
+            } catch (err) {
+                console.error('Failed to load projects:', err);
+            }
+        };
+
+        fetchProjects();
+    }, []);
+
 
     // Js section end
     // =========================================================================================
