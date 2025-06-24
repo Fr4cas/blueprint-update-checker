@@ -102,7 +102,7 @@ function UploadPage() {
                             required
                         >
                             <option value="">Select</option>
-                            <option value="__new__">Create New Project</option>
+                            <option value="__new__">New Project</option>
                             {projects.map(p => (
                                 <option key={p.id} value={p.id}>{p.name}</option>
                             ))}
@@ -111,6 +111,7 @@ function UploadPage() {
                         {selectedProject === '__new__' && (
                             <input
                                 type="text"
+                                className="new-project-input"
                                 placeholder="Enter new project name"
                                 value={newProjectName}
                                 onChange={(e) => setNewProjectName(e.target.value)}
