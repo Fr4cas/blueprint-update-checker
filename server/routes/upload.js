@@ -19,16 +19,13 @@ if (!fs.existsSync(baseMetadataDir)) fs.mkdirSync(baseMetadataDir, { recursive: 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const project = req.body.project;
-    if (!project) {
-      return cb(new Error('Project not specified'), null);
+    if (!project || !/^[a-zA-Z0-9-_]+$/.test(project)) {
+      return cb(new Error('Project not specified or invalid'), null);
     }
-
     const projectDir = path.join(baseUploadDir, project);
-
     if (!fs.existsSync(projectDir)) {
       fs.mkdirSync(projectDir, { recursive: true });
     }
-
     cb(null, projectDir);
   },
   filename: (req, file, cb) => {
@@ -55,8 +52,8 @@ router.post('/', upload.single('file'), async (req, res) => {
     const { version, notes, project } = req.body;
     const file = req.file;
 
-    if (!file || !project) {
-      return res.status(400).json({ error: 'Missing file or project.' });
+    if (!file || !project || !/^[a-zA-Z0-9-_]+$/.test(project)) {
+      return res.status(400).json({ error: 'Missing or invalid file or project name.' });
     }
 
     const projectDir = path.join(baseUploadDir, project);
@@ -125,7 +122,6 @@ router.get('/projects', (req, res) => {
     res.json(folders);
   });
 });
-
 /* ====== Upload endpoint - end ====== */
 
 module.exports = router;

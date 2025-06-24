@@ -13,7 +13,6 @@ import Footer from '../components/Footer';
 // Js section start
 
 function UploadPage() {
-
     // States
     const [projects, setProjects] = useState([]);
     const [selectedProject, setSelectedProject] = useState('');
@@ -82,7 +81,6 @@ function UploadPage() {
 
         fetchProjects();
     }, []);
-
 
     // Js section end
     // =========================================================================================
