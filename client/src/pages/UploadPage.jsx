@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 // assets
 import UploadIcon from "../assets/upload.svg";
@@ -15,6 +15,8 @@ import Footer from '../components/Footer';
 function UploadPage() {
 
     // States
+    const [projects, setProjects] = useState([]);
+    const [selectedProject, setSelectedProject] = useState('');
     const [selectedFile, setSelectedFile] = useState(null);
     const [statusMessage, setStatusMessage] = useState('');
     const [statusType, setStatusType] = useState('');
@@ -65,6 +67,18 @@ function UploadPage() {
 
                 <form onSubmit={handleSubmit} className="upload-form">
                     <div>
+                        <label>Choose Project:</label>
+                        <select
+                            value={selectedProject}
+                            onChange={(e) => setSelectedProject(e.target.value)}
+                            required
+                        >
+                            <option value="">Select</option>
+                            {projects.map(p => (
+                                <option key={p.id} value={p.id}>{p.name}</option>
+                            ))}
+                        </select>
+
                         <label>Choose PDF:</label>
                         <input type="file" accept="application/pdf" onChange={handleFileChange} />
                     </div>

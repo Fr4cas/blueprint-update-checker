@@ -14,10 +14,14 @@ body {
   margin-bottom: 2rem;
 }
 
+.upload-form div > *:not(:last-child) {
+  margin-bottom: 1rem;
+}
+
 .upload-form {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 3rem;
 }
 
 .upload-form label {
@@ -27,13 +31,37 @@ body {
   display: block;
 }
 
-.upload-form input[type="file"],
-.upload-form input[type="text"],
-.upload-form textarea {
+.upload-form select {
   width: 100%;
   padding: 0.5rem;
   border: 1px solid #ccc;
   font-size: 1rem;
+  background-color: #fff;
+  color: #333;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.upload-form input[type="file"] {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  color: #333;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.upload-form input[type="file"]::file-selector-button {
+  padding: 0.4rem 1rem;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.upload-form input[type="file"]::file-selector-button:hover {
+  background-color: #0066aa;
 }
 
 .upload-form button {
