@@ -37,11 +37,34 @@ function ScanPage() {
                         },
                         (decodedText) => {
                             setScanResult(decodedText); // Save result
-                            html5QrcodeScanner.current.stop().then(() => {
-                                console.log("Scanner stopped.");
-                            }).catch((err) => {
-                                console.warn("Stop failed:", err);
-                            });
+
+                            // Stop scanner
+                            html5QrcodeScanner.current.stop()
+                                .then(() => {
+                                    console.log("Scanner stopped.");
+                                })
+                                .catch((err) => {
+                                    console.warn("Stop failed:", err);
+                                });
+
+                            // Send scanned result to backend
+                            fetch('http://localhost:5000/scan', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({ scannedText: decodedText }),
+                            })
+                                .then(res => res.json())
+                                .then(data => {
+                                    if (data.status !== 'success') {
+                                        setScanError(data.message || 'Invalid QR code.');
+                                    }
+                                })
+                                .catch((err) => {
+                                    console.error("Scan sync error:", err);
+                                    setScanError("Failed to validate QR code.");
+                                });
                         },
                         (errorMessage) => {
                             setScanError("Unable to detect QR code. Please try again..."); 
@@ -97,7 +120,6 @@ function ScanPage() {
             </div>
         </>
     );
-
 }
 
 // html section end

@@ -9,6 +9,9 @@ import '../css/UploadPage.css'
 // components
 import Footer from '../components/Footer';
 
+// =========================================================================================
+// Js section start
+
 function UploadPage() {
 
     // States
@@ -51,6 +54,10 @@ function UploadPage() {
         }
     };
 
+    // Js section end
+    // =========================================================================================
+    //  html section start 
+
     return (
         <>
             <div className="upload-container">
@@ -91,5 +98,8 @@ function UploadPage() {
         </>
     );
 }
+
+// html section end
+// =========================================================================================
 
 export default UploadPage;
