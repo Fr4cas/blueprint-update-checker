@@ -17,6 +17,7 @@ function UploadPage() {
     // States
     const [projects, setProjects] = useState([]);
     const [selectedProject, setSelectedProject] = useState('');
+    const [newProjectName, setNewProjectName] = useState('');
     const [selectedFile, setSelectedFile] = useState(null);
     const [statusMessage, setStatusMessage] = useState('');
     const [statusType, setStatusType] = useState('');
@@ -31,8 +32,18 @@ function UploadPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // New project upload (folder + file)
+        const projectToSubmit = selectedProject === '__new__' ? newProjectName.trim() : selectedProject;
+
+        if (!projectToSubmit) {
+            setStatusType('error');
+            setStatusMessage('Please select or enter a project name.');
+            return;
+        }
+
+        // Single file upload
         const formData = new FormData();
-        formData.append('project', selectedProject);
+        formData.append('project', projectToSubmit);
         formData.append('file', selectedFile);
 
         try {
@@ -91,10 +102,21 @@ function UploadPage() {
                             required
                         >
                             <option value="">Select</option>
+                            <option value="__new__">Create New Project</option>
                             {projects.map(p => (
                                 <option key={p.id} value={p.id}>{p.name}</option>
                             ))}
                         </select>
+
+                        {selectedProject === '__new__' && (
+                            <input
+                                type="text"
+                                placeholder="Enter new project name"
+                                value={newProjectName}
+                                onChange={(e) => setNewProjectName(e.target.value)}
+                                required
+                            />
+                        )}
 
                         <label>Choose PDF:</label>
                         <input type="file" accept="application/pdf" onChange={handleFileChange} />
