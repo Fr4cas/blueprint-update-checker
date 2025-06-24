@@ -9,8 +9,8 @@ A lightweight web app that ensures construction workers always access the **late
 - **QR Code Generator**: Automatically generates a QR code that links to the latest uploaded blueprint (PDF).
 - **Version Tracking**: Displays blueprint version, upload date, and version status.
 - **QR Scanner Interface**: Workers can scan a code to instantly verify the blueprint’s validity.
-- **Simple Web Interface**: Optimized for desktop, tablet, and on-site mobile use.
-- **Trimble Connect API Integration**: Securely accessess bluepreint data via Trimble's OAuth-protected APIs using stored refresh tokens.
+- **Simple Web Interface**: Optimized for desktop, tablet, and on site mobile use.
+- **Local File Management**: Operates without reliance on third party APIs for file handling or version control.
 
 ---
 
@@ -26,15 +26,13 @@ A lightweight web app that ensures construction workers always access the **late
   - pdf-lib (PDF QR code embedding)
   - qrcode (generate QR image from link)
 - **Storage**: Local file system (can be extended to cloud storage)
-- **Authentication**: Trimble OAuth 2.0 (`refresh_token` flow)
+- **Authentication**: _None required_ (no longer dependent on OAuth services)
 
 ---
 
-## API Intergration (Trimble Connect)
+## Deprecated: Trimble Connect Integration
 
-- Access tokens are refreshed automatically before API requests.
-- API usage complies with [Trimble’s SDK License](https://www.trimble.com/en/products/trimble-connect/sdk-iu-license-agreement).
-- Secrets and tokens are stored in .env
+This project **previously used the Trimble Connect API** for blueprint storage and access via OAuth tokens and `refresh_token` flow. That integration has been removed in favor of a self hosted local solution for simplicity and performance in low connectivity environments.
 
 ---
 
@@ -47,10 +45,11 @@ A lightweight web app that ensures construction workers always access the **late
 
 ## Licensing
 
-This project uses the Trimble Connect SDK under the [Trimble Internal Use License](./LICENSE.trimble.txt). This limits use to internal applications and requires compliance with Trimble's API terms.
+The current version does **not require any external SDK licensing**.  
+_Archived Trimble Connect SDK code_ remains under the [Trimble Internal Use License](./LICENSE.trimble.txt) and must comply with Trimble's terms if reused.
 
 ---
 
 ## Status
 
-**Actively being rebuilt** — Project was reset from a legacy JS/CSS version to a modern full stack architecture.
+**Actively in development** — Rebuilt from a legacy single page JS/CSS app into a modular, full stack architecture for local first deployment.
