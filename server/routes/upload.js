@@ -9,10 +9,8 @@ const router = express.Router();
 
 /* ====== Directory setup - start ====== */
 const baseUploadDir = path.join(__dirname, '../uploads/projects');
-const baseMetadataDir = path.join(__dirname, '../metadata');
 
 if (!fs.existsSync(baseUploadDir)) fs.mkdirSync(baseUploadDir, { recursive: true });
-if (!fs.existsSync(baseMetadataDir)) fs.mkdirSync(baseMetadataDir, { recursive: true });
 /* ====== Directory setup - end ====== */
 
 /* ====== Multer config - start ====== */
@@ -49,7 +47,7 @@ const upload = multer({ storage, fileFilter });
 /* ====== Upload endpoint - start ====== */
 router.post('/', upload.array('files'), async (req, res) => {
   try {
-    const { version, notes, project } = req.body;
+    const { project } = req.body;
     const files = req.files;
 
     if (!files || files.length === 0 || !project || !/^[a-zA-Z0-9-_]+$/.test(project)) {
@@ -81,28 +79,12 @@ router.post('/', upload.array('files'), async (req, res) => {
       const modifiedPdfBytes = await pdfDoc.save();
       fs.writeFileSync(filePath, modifiedPdfBytes);
 
-      // Save metadata
-      const metadataProjectDir = path.join(baseMetadataDir, project);
-      if (!fs.existsSync(metadataProjectDir)) {
-        fs.mkdirSync(metadataProjectDir, { recursive: true });
-      }
-
-      const metadata = {
-        file: file.filename,
-        originalName: file.originalname,
-        version,
-        notes,
-        uploadAt: new Date().toISOString()
-      };
-
-      const metadataFilename = file.filename.replace(/\.pdf$/i, '.json');
-      const metadataPath = path.join(metadataProjectDir, metadataFilename);
-      fs.writeFileSync(metadataPath, JSON.stringify(metadata, null, 2));
-
       results.push({
         status: 'success',
         fileUrl,
-        ...metadata
+        file: file.filename,
+        originalName: file.originalname,
+        uploadAt: new Date().toISOString()
       });
     }
 
