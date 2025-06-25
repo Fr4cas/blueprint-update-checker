@@ -68,6 +68,7 @@ function UploadPage() {
                 setStatusType('success');
                 setStatusMessage('Upload Successful!');
                 setDownloadUrl(data.fileUrl);
+                setSelectedFiles([]);
             } else {
                 setStatusType('error');
                 setStatusMessage(data.message || 'Upload Failed. Make sure file is a PDF.');
