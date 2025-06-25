@@ -17,14 +17,14 @@ function UploadPage() {
     const [projects, setProjects] = useState([]);
     const [selectedProject, setSelectedProject] = useState('');
     const [newProjectName, setNewProjectName] = useState('');
-    const [selectedFile, setSelectedFile] = useState(null);
+    const [selectedFiles, setSelectedFiles] = useState([]);
     const [statusMessage, setStatusMessage] = useState('');
     const [statusType, setStatusType] = useState('');
     const [downloadUrl, setDownloadUrl] = useState('');
 
     // Handle file selection
     const handleFileChange = (e) => {
-        setSelectedFile(e.target.files[0]);
+        setSelectedFiles([...e.target.files]);
     };
 
     // Handle form submission
@@ -43,7 +43,10 @@ function UploadPage() {
         // Single file upload
         const formData = new FormData();
         formData.append('project', projectToSubmit);
-        formData.append('file', selectedFile);
+        selectedFiles.forEach(file => {
+            formData.append('files', file);
+        });
+
 
         try {
             const res = await fetch('http://localhost:5000/upload', {
@@ -118,10 +121,10 @@ function UploadPage() {
                         )}
 
                         <label>Choose PDF:</label>
-                        <input type="file" accept="application/pdf" onChange={handleFileChange} />
+                        <input type="file" accept="application/pdf" onChange={handleFileChange} multiple />
                     </div>
 
-                    <button type="submit" disabled={!selectedFile}>
+                    <button type="submit" disabled={selectedFiles.length === 0}>
                         <img src={UploadIcon} alt="Upload icon" className="icon" />
                         Upload Blueprint
                     </button>
@@ -140,8 +143,15 @@ function UploadPage() {
                         </div>
                     )}
 
-                    {selectedFile && (
-                        <p className="upload-preview">Selected: {selectedFile.name}</p>
+                    {selectedFiles.length > 0 && (
+                        <div className="upload-preview">
+                            <p>Selected:</p>
+                            <ul>
+                                {selectedFiles.map((file, index) => (
+                                    <li key={index}>{file.name}</li>
+                                ))}
+                            </ul>
+                        </div>
                     )}
                 </div>
 

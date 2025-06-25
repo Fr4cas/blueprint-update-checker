@@ -47,67 +47,72 @@ const upload = multer({ storage, fileFilter });
 /* ====== Multer config - end ====== */
 
 /* ====== Upload endpoint - start ====== */
-router.post('/', upload.single('file'), async (req, res) => {
+router.post('/', upload.array('files'), async (req, res) => {
   try {
     const { version, notes, project } = req.body;
-    const file = req.file;
+    const files = req.files;
 
-    if (!file || !project || !/^[a-zA-Z0-9-_]+$/.test(project)) {
-      return res.status(400).json({ error: 'Missing or invalid file or project name.' });
+    if (!files || files.length === 0 || !project || !/^[a-zA-Z0-9-_]+$/.test(project)) {
+      return res.status(400).json({ status: 'error', message: 'Missing or invalid files or project name.' });
     }
 
-    const projectDir = path.join(baseUploadDir, project);
-    const filePath = path.join(projectDir, file.filename);
-    const fileUrl = `${req.protocol}://${req.get('host')}/uploads/projects/${project}/${file.filename}`;
-    const qrDataUrl = await QRCode.toDataURL(fileUrl);
+    const results = [];
 
-    // Embed QR Code into PDF
-    const existingPdfBytes = fs.readFileSync(filePath);
-    const pdfDoc = await PDFDocument.load(existingPdfBytes);
-    const pngImage = await pdfDoc.embedPng(qrDataUrl);
-    const page = pdfDoc.getPages()[0];
-    const { width, height } = page.getSize();
+    for (const file of files) {
+      const projectDir = path.join(baseUploadDir, project);
+      const filePath = path.join(projectDir, file.filename);
+      const fileUrl = `${req.protocol}://${req.get('host')}/uploads/projects/${project}/${file.filename}`;
+      const qrDataUrl = await QRCode.toDataURL(fileUrl);
 
-    page.drawImage(pngImage, {
-      x: width - 100,
-      y: 50,
-      width: 80,
-      height: 80
-    });
+      // Embed QR code into the PDF
+      const existingPdfBytes = fs.readFileSync(filePath);
+      const pdfDoc = await PDFDocument.load(existingPdfBytes);
+      const pngImage = await pdfDoc.embedPng(qrDataUrl);
+      const page = pdfDoc.getPages()[0];
+      const { width, height } = page.getSize();
 
-    const modifiedPdfBytes = await pdfDoc.save();
-    fs.writeFileSync(filePath, modifiedPdfBytes);
+      page.drawImage(pngImage, {
+        x: width - 100,
+        y: 50,
+        width: 80,
+        height: 80
+      });
 
-    // Save metadata
-    const metadataProjectDir = path.join(baseMetadataDir, project);
-    if (!fs.existsSync(metadataProjectDir)) {
-      fs.mkdirSync(metadataProjectDir, { recursive: true });
+      const modifiedPdfBytes = await pdfDoc.save();
+      fs.writeFileSync(filePath, modifiedPdfBytes);
+
+      // Save metadata
+      const metadataProjectDir = path.join(baseMetadataDir, project);
+      if (!fs.existsSync(metadataProjectDir)) {
+        fs.mkdirSync(metadataProjectDir, { recursive: true });
+      }
+
+      const metadata = {
+        file: file.filename,
+        originalName: file.originalname,
+        version,
+        notes,
+        uploadAt: new Date().toISOString()
+      };
+
+      const metadataFilename = file.filename.replace(/\.pdf$/i, '.json');
+      const metadataPath = path.join(metadataProjectDir, metadataFilename);
+      fs.writeFileSync(metadataPath, JSON.stringify(metadata, null, 2));
+
+      results.push({
+        status: 'success',
+        fileUrl,
+        ...metadata
+      });
     }
 
-    const metadata = {
-      file: file.filename,
-      originalName: file.originalname,
-      version,
-      notes,
-      uploadAt: new Date().toISOString()
-    };
-
-    const metadataFilename = file.filename.replace(/\.pdf$/i, '.json');
-    const metadataPath = path.join(metadataProjectDir, metadataFilename);
-    fs.writeFileSync(metadataPath, JSON.stringify(metadata, null, 2));
-
-    res.json({
-      status: 'success',
-      fileUrl,
-      ...metadata
-    });
+    res.json({ status: 'success', files: results });
 
   } catch (err) {
     console.error('Upload error:', err);
     res.status(500).json({ status: 'error', message: 'Server error during upload.' });
   }
 });
-
 /* ====== Upload endpoint - end ====== */
 
 module.exports = router;
