@@ -24,7 +24,15 @@ function UploadPage() {
 
     // Handle file selection
     const handleFileChange = (e) => {
-        setSelectedFiles([...e.target.files]);
+        const newFiles = Array.from(e.target.files);
+
+        // Prevent duplicate file names
+        const fileMap = new Map();
+        [...selectedFiles, ...newFiles].forEach(file => {
+            fileMap.set(file.name, file);
+        });
+
+        setSelectedFiles(Array.from(fileMap.values()));
     };
 
     // Handle form submission

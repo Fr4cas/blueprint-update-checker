@@ -84,6 +84,20 @@ body {
   font-weight: bold;
 }
 
+.upload-preview ul {
+  margin-top: 0.5rem;
+  padding-left: 1.25rem;
+  list-style-type: disc;
+  color: #333;
+  font-weight: normal;
+  text-align: left;
+}
+
+.upload-preview li {
+  margin-bottom: 0.3rem;
+  font-size: 0.95rem;
+}
+
 .after-form {
   text-align: center;
   max-width: 600px;
