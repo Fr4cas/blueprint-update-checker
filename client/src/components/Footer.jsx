@@ -8,7 +8,7 @@ function Footer() {
         Version: 0.1 MVP | Language:
         <select className="select">
           <option>EN</option>
-          <option>繁體</option>
+          <option>中文</option>
         </select>
       </p>
     </footer>
