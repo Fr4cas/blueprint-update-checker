@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 // assets
 import UploadIcon from "../assets/upload.svg";
@@ -21,6 +22,8 @@ function UploadPage() {
     const [statusMessage, setStatusMessage] = useState('');
     const [statusType, setStatusType] = useState('');
     const [downloadUrl, setDownloadUrl] = useState('');
+
+    const { t } = useTranslation('upload');
 
     // Handle file selection
     const handleFileChange = (e) => {
@@ -101,18 +104,18 @@ function UploadPage() {
     return (
         <>
             <div className="upload-container">
-                <h1>Attach QR Code</h1>
+                <h1>{t('title')}</h1>
 
                 <form onSubmit={handleSubmit} className="upload-form">
                     <div>
-                        <label>Choose Project:</label>
+                        <label>{t('form.projectLabel')}</label>
                         <select
                             value={selectedProject}
                             onChange={(e) => setSelectedProject(e.target.value)}
                             required
                         >
-                            <option value="">Select</option>
-                            <option value="__new__">New Project</option>
+                            <option value="">{t('form.selectPlaceholder')}</option>
+                            <option value="__new__">{t('form.newProjectOption')}</option>
                             {projects.map(p => (
                                 <option key={p.id} value={p.id}>{p.name}</option>
                             ))}
@@ -122,39 +125,39 @@ function UploadPage() {
                             <input
                                 type="text"
                                 className="new-project-input"
-                                placeholder="Enter new project name"
+                                placeholder={t('form.newProjectPlaceholder')}
                                 value={newProjectName}
                                 onChange={(e) => setNewProjectName(e.target.value)}
                                 required
                             />
                         )}
 
-                        <label>Choose PDF:</label>
+                        <label>{t('form.fileLabel')}</label>
                         <input type="file" accept="application/pdf" onChange={handleFileChange} multiple />
                     </div>
 
                     <button type="submit" disabled={selectedFiles.length === 0}>
                         <img src={UploadIcon} alt="Upload icon" className="icon" />
-                        Upload Blueprint
+                        {t('form.submit')}
                     </button>
                 </form>
 
                 <div className="after-form">
                     {downloadUrl && (
                         <a href={downloadUrl} download className="download-button">
-                            Download
+                            {t('after.download')}
                         </a>
                     )}
 
                     {statusMessage && (
                         <div className={`upload-status ${statusType}`}>
-                            {statusMessage}
+                            {t(`status.${statusType}`)}
                         </div>
                     )}
 
                     {selectedFiles.length > 0 && (
                         <div className="upload-preview">
-                            <p>Selected:</p>
+                            <p>{t('after.selected')}</p>
                             <ul>
                                 {selectedFiles.map((file, index) => (
                                     <li key={index}>{file.name}</li>

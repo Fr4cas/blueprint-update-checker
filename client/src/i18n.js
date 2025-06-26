@@ -6,11 +6,13 @@ import { initReactI18next } from 'react-i18next';
 import commonEn from "./locales/en/common.json"
 import homeEn from "./locales/en/home.json"
 import scanEn from "./locales/en/scan.json"
+import uploadEn from "./locales/en/upload.json"
 
 // Chinese
 import commonZh from "./locales/zh/common.json"
 import homeZh from "./locales/zh/home.json"
 import scanZh from "./locales/zh/scan.json"
+import uploadZh from "./locales/zh/upload.json"
 
 /* ====== Language importing - end ====== */
 
@@ -20,17 +22,19 @@ i18n
             en: {
                 common: commonEn,
                 home: homeEn,
-                scan: scanEn
+                scan: scanEn,
+                upload: uploadEn
             },
             zh: {
                 common: commonZh,
                 home: homeZh,
-                scan: scanZh
+                scan: scanZh,
+                upload: uploadZh
             }
         },
         lng: localStorage.getItem('lang') || 'en',
         fallbackLng: 'en',
-        ns: ['common', 'home', 'scan'],
+        ns: ['common', 'home', 'scan', 'upload'],
         defaultNS: 'home',
         interpolation: {
             escapeValue: false

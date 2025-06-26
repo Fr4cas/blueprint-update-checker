@@ -1,0 +1,19 @@
+{
+    "title": "Attach QR Code",
+    "form": {
+        "projectLabel": "Choose Project:",
+        "selectPlaceholder": "Select",
+        "newProjectOption": "New Project",
+        "newProjectPlaceholder": "Enter new project name",
+        "fileLabel": "Choose PDF:",
+        "submit": "Upload Blueprint"
+    },
+    "after": {
+        "download": "Download",
+        "selected": "Selected:"
+    },
+    "status": {
+        "success": "Upload successful!",
+        "error": "Upload failed. Please try again."
+    }
+}
