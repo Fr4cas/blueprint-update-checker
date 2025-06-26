@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useTranslation } from 'react-i18next';
 
 // css
 import '../css/ScanPage.css';
@@ -13,6 +14,7 @@ import { Html5Qrcode } from 'html5-qrcode';
 // Js section start
 
 function ScanPage() {
+    const { t } = useTranslation('scan')
 
     // state and ref initialization
     const scannerRef = useRef(null); // point to html where scanner will render
@@ -99,8 +101,8 @@ function ScanPage() {
     return (
         <>
             <div className="scan-container">
-                <h1>Scan QR Code</h1>
-                <p>Check Version</p>
+                <h1>{t('title')}</h1>
+                <p>{t('subtitle')}</p>
 
                 {!scanResult ? (
                     <>
