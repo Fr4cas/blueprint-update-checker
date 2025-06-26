@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import '../css/Footer.css';
 
 function Footer() {
-  const { i18n } = useTranslation('home');
+  const { t, i18n } = useTranslation('common');
 
   const changeLanguage = (e) => {
     const lng = e.target.value;
@@ -14,7 +14,7 @@ function Footer() {
   return (
     <footer className="footer">
       <p>
-        Version: 0.1 MVP | Language:
+        {t('version', { version: '0.1 MVP' })} | {t('language')}:
         <select className="select" onChange={changeLanguage} defaultValue={i18n.language}>
           <option value={"en"}>EN</option>
           <option value={"zh"}>中文</option>
