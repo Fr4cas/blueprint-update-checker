@@ -1,5 +1,5 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 // assets
 import AttachIcon from "../assets/attach.svg";
@@ -16,6 +16,7 @@ import Footer from '../components/Footer';
 
 function Home() {
   const navigate = useNavigate();
+  const { t } = useTranslation('home')
 
   //  js section end
   // =========================================================================================
@@ -24,17 +25,17 @@ function Home() {
   return (
     <>
       <div className="home-container">
-        <h1 className="home-title">Blueprint QR Viewer</h1>
-        <p className="home-subtitle">Welcome! What would you like to do?</p>
+        <h1 className="home-title">{t('title')}</h1>
+        <p className="home-subtitle">{t('subtitle')}</p>
 
         <div className="home-buttons">
           <button className="home-button" onClick={() => navigate('/upload')}>
             <img src={AttachIcon} alt="Attach icon" className='icon' />
-            QR Attacher
+            {t('button.attach')}
           </button>
           <button className="home-button" onClick={() => navigate('/scan')}>
             <img src={ScanIcon} alt="Scan icon" className='icon' />
-            Scanner
+            {t('button.scan')}
           </button>
         </div>
       </div>

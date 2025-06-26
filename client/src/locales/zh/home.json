@@ -1,0 +1,8 @@
+{
+  "title": "藍圖 QR 檢視器",
+  "subtitle": "歡迎！請選擇您要執行的操作",
+  "button": {
+    "attach": "附加 QR 碼",
+    "scan": "掃描器"
+  }
+}

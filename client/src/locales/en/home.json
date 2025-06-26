@@ -1,0 +1,8 @@
+{
+    "title": "Blueprint QR Viewer",
+    "subtitle": "Welcome! What would you like to do?",
+    "button": {
+        "attach": "QR Attacher",
+        "scan": "Scanner"
+    }
+}
