@@ -7,7 +7,7 @@ function extractTimestamp(filename) {
     return match ? match[0] : null;
 }
 
-function isLatestVersion(projectName, scannedFilePath){
+function isLatestVersion(projectName, scannedFilePath) {
     const scannedFileName = path.basename(scannedFilePath);
     const scannedTimestamp = extractTimestamp(scannedFileName);
 
@@ -17,6 +17,13 @@ function isLatestVersion(projectName, scannedFilePath){
 
     console.log('Scanned timestamp', scannedTimestamp);
     console.log('All files', allFiles);
+
+    // Extract timestamp from files
+    const timestamps = allFiles
+        .map(filename => extractTimestamp(filename))
+        .filter(Boolean)
+
+    console.log('All timestamps', timestamps);
 
     return null
 }
