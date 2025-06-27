@@ -6,17 +6,25 @@ A lightweight web app that ensures construction workers always access the **late
 
 ## Features
 
-- **QR Code Generator**: Automatically generates a QR code that links to the latest uploaded blueprint (PDF).
-- **Version Tracking**: Displays blueprint version, upload date, and version status.
-- **QR Scanner Interface**: Workers can scan a code to instantly verify the blueprint’s validity.
+- **QR Code Generator**: Automatically generates a QR code linking to the uploaded blueprint (PDF), and embeds it directly into the PDF file.
+- **Version Comparison**: Workers can scan a QR code from any printed blueprint and verify if it's the **latest version** stored on the system.
+- **Project-Based Organization**: Uploads are organized into individual project folders with automatic version handling.
+- **Multiple File Upload Support**: Upload several blueprints in one batch; the system handles versioning automatically.
+- **QR Scanner Interface**: Simple UI for scanning printed QR codes to validate blueprint versions.
+- **Project Selection UI**: Users can select from existing projects or create a new one during upload.
 - **Simple Web Interface**: Optimized for desktop, tablet, and on site mobile use.
+- **Multilingual Support**: Interface supports both **English** and **Traditional Chinese**.
 - **Local File Management**: Operates without reliance on third party APIs for file handling or version control.
 
 ---
 
 ## Tech Stack
 
-- **Frontend**: React, HTML5 QR Scanner, QR Code Generator
+- **Frontend**:
+  - React
+  - i18next
+  - HTML5 QR Scanner
+  - QR Code Generator
 - **Backend**: 
   - Node.js + Express (core server framework)
   - Multer (file upload handling)
@@ -25,7 +33,7 @@ A lightweight web app that ensures construction workers always access the **late
   - node-fetch (Trimble API requests via OAuth)
   - pdf-lib (PDF QR code embedding)
   - qrcode (generate QR image from link)
-- **Storage**: Local file system (can be extended to cloud storage)
+- **Storage**: Local file system (organized by project folders)
 - **Authentication**: _None required_ (no longer dependent on OAuth services)
 
 ---
@@ -38,7 +46,7 @@ This project **previously used the Trimble Connect API** for blueprint storage a
 
 ## Languages
 
-- Interface: English + Traditional Chinese (planned)
+- Interface: English + Traditional Chinese
 - Code: JavaScript (React, Node.js)
 
 ---
