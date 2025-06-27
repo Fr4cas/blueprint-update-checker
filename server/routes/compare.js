@@ -1,3 +1,4 @@
+const { match } = require('assert');
 const fs = require('fs');
 const path = require('path');
 
@@ -11,7 +12,7 @@ function isLatestVersion(projectName, scannedFilePath) {
     const scannedFileName = path.basename(scannedFilePath);
     const scannedTimestamp = extractTimestamp(scannedFileName);
 
-    const suffix = scannedFileName.replace(`${scannedTimestamp}_`, '');
+    const suffix = scannedFileName.replace(`${scannedTimestamp}_`, '').trim().toLowerCase();
     console.log('Scanned suffix', suffix);
 
     const projectDir = path.join(__dirname, '../', 'uploads', 'projects', projectName);
@@ -21,12 +22,16 @@ function isLatestVersion(projectName, scannedFilePath) {
     console.log('Scanned timestamp', scannedTimestamp);
     console.log('All files', allFiles);
 
-    // Extract timestamp from files
-    const timestamps = allFiles
-        .map(filename => extractTimestamp(filename))
-        .filter(Boolean)
+    // Match names of files before extracting timestamps
+    const matchingFiles = allFiles.filter(filename => filename.trim().toLowerCase().endsWith(suffix));
+    
+    console.log('Matching files', matchingFiles);
 
-    console.log('All timestamps', timestamps);
+    const timestamps = matchingFiles
+        .map(filename => extractTimestamp(filename))
+        .filter(Boolean);
+
+    console.log('Filtered timestamps', timestamps);
 
     return null
 }
