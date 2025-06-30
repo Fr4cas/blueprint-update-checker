@@ -21,6 +21,7 @@ function ScanPage() {
     const html5QrcodeScanner = useRef(null); // hold instance of scanner
     const [scanResult, setScanResult] = useState(null); // store text (URL from QR code)
     const [scanError, setScanError] = useState('');  // errors
+    const [compareResult, setCompareResult] = useState(null);
 
     useEffect(() => {
 
@@ -64,11 +65,8 @@ function ScanPage() {
                                 .then(res => res.json())
                                 .then(data => {
                                     console.log('Compare result:', data);
-                                    if (!data.isLatest) {
-                                        setScanError(`Not latest. Latest: ${data.latestTimestamp}`);
-                                    } else {
-                                        console.log('This is the latest version.');
-                                    }
+                                    setCompareResult(data);
+                                    setScanError('');
                                 })
                                 .catch((err) => {
                                     console.error("Compare error:", err);
@@ -107,34 +105,31 @@ function ScanPage() {
     // =========================================================================================
     //  html section start 
 
-    // const simulateScan = () => {
-    //     const mockText = 'uploads/projects/project1/20250625_145030_blueprint1.pdf';
+    const simulateScan = () => {
+        const mockText = 'uploads/projects/project1/20250624_145030_blueprint1.pdf';
 
-    //     setScanResult(mockText);
+        setScanResult(mockText);
 
-    //     const parts = mockText.split('/');
-    //     const project = parts[2];
-    //     const scannedFile = parts.slice(3).join('/');
+        const parts = mockText.split('/');
+        const project = parts[2];
+        const scannedFile = parts.slice(3).join('/');
 
-    //     fetch('http://localhost:5000/compare', {
-    //         method: 'POST',
-    //         headers: { 'Content-Type': 'application/json' },
-    //         body: JSON.stringify({ project, scannedFile }),
-    //     })
-    //         .then(res => res.json())
-    //         .then(data => {
-    //             console.log('Simulated compare result:', data);
-    //             if (!data.isLatest) {
-    //                 setScanError(`Not latest. Latest: ${data.latestTimestamp}`);
-    //             } else {
-    //                 setScanError('This is the latest version.');
-    //             }
-    //         })
-    //         .catch((err) => {
-    //             console.error("Simulation error:", err);
-    //             setScanError("Simulated check failed.");
-    //         });
-    // };
+        fetch('http://localhost:5000/compare', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ project, scannedFile }),
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log('Simulated compare result:', data);
+                setCompareResult(data);
+                setScanError('');
+            })
+            .catch((err) => {
+                console.error("Simulation error:", err);
+                setScanError("Simulated check failed.");
+            });
+    };
 
     return (
         <>
@@ -156,9 +151,21 @@ function ScanPage() {
                     </div>
                 )}
 
-                {/* <button onClick={simulateScan} className="test-button">
+                {compareResult && (
+                    <div className="compare-result">
+                        {compareResult.isLatest ? (
+                            <p className="success">This is the latest version.</p>
+                        ) : (
+                            <p className="warning">
+                                Not the latest. Latest: {compareResult.latestTimestamp}
+                            </p>
+                        )}
+                    </div>
+                )}
+
+                <button onClick={simulateScan} className="test-button">
                     Simulate QR Scan
-                </button> */}
+                </button>
 
                 <Footer />
             </div>
