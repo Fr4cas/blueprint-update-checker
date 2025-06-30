@@ -14,6 +14,8 @@ if (!fs.existsSync(baseUploadDir)) fs.mkdirSync(baseUploadDir, { recursive: true
 /* ====== Directory setup - end ====== */
 
 /* ====== Multer config - start ====== */
+const iconv = require('iconv-lite'); // decode for Chinese
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const project = req.body.project;
@@ -29,9 +31,26 @@ const storage = multer.diskStorage({
   filename: (req, file, cb) => {
     const now = new Date();
     const timestamp = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}_${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}${String(now.getSeconds()).padStart(2, '0')}`;
-    const uniqueName = `${timestamp}_${file.originalname.trim().replace(/\s+/g, '')}`;
+
+    // Fix encoding: convert ISO-8859-1 → UTF-8
+    let properlyDecoded;
+    try {
+      const buffer = Buffer.from(file.originalname, 'latin1'); // interpret as ISO-8859-1
+      properlyDecoded = buffer.toString('utf8');               // convert to UTF-8
+    } catch {
+      properlyDecoded = file.originalname; // fallback
+    }
+
+    const cleaned = properlyDecoded
+      .normalize('NFC')
+      .trim()
+      .replace(/\s+/g, '')
+      .replace(/[<>:"\/\\|?*\x00-\x1F]/g, '')
+      .replace(/\.+$/, '');
+
+    const uniqueName = `${timestamp}_${cleaned}`;
     cb(null, uniqueName);
-  },
+  }
 });
 
 const fileFilter = (req, file, cb) => {
