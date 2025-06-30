@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
 // POST new project folder
 router.post('/', (req, res) => {
   const { name } = req.body;
-  if (!name || !/^[a-zA-Z0-9-_]+$/.test(name)) {
+  if (!name || typeof name !== 'string' || /[<>:"\/\\|?*\x00-\x1F]/.test(name.trim())) {
     return res.status(400).json({ error: 'Invalid project name.' });
   }
   const newProjectPath = path.join(projectsDir, name);

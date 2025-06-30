@@ -19,7 +19,7 @@ const iconv = require('iconv-lite'); // decode for Chinese
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const project = req.body.project;
-    if (!project || !/^[a-zA-Z0-9-_]+$/.test(project)) {
+    if (!project || /[<>:"\/\\|?*\x00-\x1F]/.test(project.trim())) {
       return cb(new Error('Project not specified or invalid'), null);
     }
     const projectDir = path.join(baseUploadDir, project);
@@ -69,7 +69,7 @@ router.post('/', upload.array('files'), async (req, res) => {
     const { project } = req.body;
     const files = req.files;
 
-    if (!files || files.length === 0 || !project || !/^[a-zA-Z0-9-_]+$/.test(project)) {
+    if (!files || files.length === 0 || !project || /[<>:"\/\\|?*\x00-\x1F]/.test(project.trim())) {
       return res.status(400).json({ status: 'error', message: 'Missing or invalid files or project name.' });
     }
 
