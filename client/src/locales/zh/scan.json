@@ -1,4 +1,6 @@
 {
     "title": "掃描 QR 碼",
-    "subtitle": "檢查版本"
+    "subtitle": "檢查版本",
+    "latest": "這是最新版本。",
+    "notLatest": "不是最新版本。最新版本為："
 }

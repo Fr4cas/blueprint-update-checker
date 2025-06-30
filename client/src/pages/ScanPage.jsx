@@ -154,10 +154,10 @@ function ScanPage() {
                 {compareResult && (
                     <div className="compare-result">
                         {compareResult.isLatest ? (
-                            <p className="success">This is the latest version.</p>
+                            <p className="success">{t('latest')}</p>
                         ) : (
                             <p className="warning">
-                                Not the latest. Latest: {compareResult.latestTimestamp}
+                                {t('notLatest')} {compareResult.latestTimestamp}
                             </p>
                         )}
                     </div>

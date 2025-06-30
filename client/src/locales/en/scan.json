@@ -1,4 +1,6 @@
 {
     "title": "Scan QR Code",
-    "subtitle": "Check Version"
+    "subtitle": "Check Version",
+    "latest": "This is the latest version.",
+    "notLatest": "Not the latest. Latest:"
 }
