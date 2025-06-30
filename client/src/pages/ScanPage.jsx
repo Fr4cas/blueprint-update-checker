@@ -49,27 +49,34 @@ function ScanPage() {
                                     console.warn("Stop failed:", err);
                                 });
 
-                            // Send scanned result to backend
-                            fetch('http://localhost:5000/scan', {
+                            // Parse project and scanned file from scannedText
+                            const parts = decodedText.split('/');
+                            const project = parts[2]; // assuming: uploads/projects/project1/file.pdf
+                            const scannedFile = parts.slice(3).join('/');
+
+                            fetch('http://localhost:5000/compare', {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json',
                                 },
-                                body: JSON.stringify({ scannedText: decodedText }),
+                                body: JSON.stringify({ project, scannedFile }),
                             })
                                 .then(res => res.json())
                                 .then(data => {
-                                    if (data.status !== 'success') {
-                                        setScanError(data.message || 'Invalid QR code.');
+                                    console.log('Compare result:', data);
+                                    if (!data.isLatest) {
+                                        setScanError(`Not latest. Latest: ${data.latestTimestamp}`);
+                                    } else {
+                                        console.log('This is the latest version.');
                                     }
                                 })
                                 .catch((err) => {
-                                    console.error("Scan sync error:", err);
-                                    setScanError("Failed to validate QR code.");
+                                    console.error("Compare error:", err);
+                                    setScanError("Failed to validate file version.");
                                 });
                         },
                         (errorMessage) => {
-                            setScanError("Unable to detect QR code. Please try again..."); 
+                            setScanError("Unable to detect QR code. Please try again...");
                         }
                     );
                 } else {
@@ -80,6 +87,8 @@ function ScanPage() {
                 console.error("Camera access error:", err);
                 setScanError("Failed to access camera.");
             });
+
+
 
         // Cleanup on unmount
         return () => {
@@ -97,6 +106,35 @@ function ScanPage() {
     // Js section end
     // =========================================================================================
     //  html section start 
+
+    // const simulateScan = () => {
+    //     const mockText = 'uploads/projects/project1/20250625_145030_blueprint1.pdf';
+
+    //     setScanResult(mockText);
+
+    //     const parts = mockText.split('/');
+    //     const project = parts[2];
+    //     const scannedFile = parts.slice(3).join('/');
+
+    //     fetch('http://localhost:5000/compare', {
+    //         method: 'POST',
+    //         headers: { 'Content-Type': 'application/json' },
+    //         body: JSON.stringify({ project, scannedFile }),
+    //     })
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             console.log('Simulated compare result:', data);
+    //             if (!data.isLatest) {
+    //                 setScanError(`Not latest. Latest: ${data.latestTimestamp}`);
+    //             } else {
+    //                 setScanError('This is the latest version.');
+    //             }
+    //         })
+    //         .catch((err) => {
+    //             console.error("Simulation error:", err);
+    //             setScanError("Simulated check failed.");
+    //         });
+    // };
 
     return (
         <>
@@ -117,6 +155,10 @@ function ScanPage() {
                         </a>
                     </div>
                 )}
+
+                {/* <button onClick={simulateScan} className="test-button">
+                    Simulate QR Scan
+                </button> */}
 
                 <Footer />
             </div>
