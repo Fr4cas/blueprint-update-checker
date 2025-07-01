@@ -78,7 +78,7 @@ router.post('/', upload.array('files'), async (req, res) => {
     for (const file of files) {
       const projectDir = path.join(baseUploadDir, project);
       const filePath = path.join(projectDir, file.filename);
-      const fileUrl = `${req.protocol}://${req.get('host')}/uploads/projects/${project}/${file.filename}`;
+      const fileUrl = `${req.protocol}://${req.get('host')}/#/scan?project=${project}&file=${file.filename}`;
       const qrDataUrl = await QRCode.toDataURL(fileUrl);
 
       // Embed QR code into the PDF
