@@ -28,6 +28,8 @@ app.get('/', (req, res) => {
   res.send('API is running');
 });
 
+/* Server now runs on 0.0.0.0 to support local network access
+   Using HashRouter in frontend to simplify routing and avoid path to regexp errors */
 const getLocalIp = () => {
   const interfaces = os.networkInterfaces();
   for (const name of Object.keys(interfaces)) {
