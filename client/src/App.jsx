@@ -6,6 +6,11 @@ import Home from './pages/Home.jsx';
 import UploadPage from './pages/UploadPage.jsx';
 import ScanPage from './pages/ScanPage.jsx';
 
+// Tell user page doesn't exist
+function NotFound() {
+  return <h2 style={{ textAlign: 'center' }}>404 – Page Not Found</h2>;
+}
+
 // Handles all pathing of app
 function App() {
   return (
@@ -13,6 +18,7 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/upload" element={<UploadPage />} />
       <Route path="/scan" element={<ScanPage />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }
