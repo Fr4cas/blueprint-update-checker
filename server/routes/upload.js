@@ -1,11 +1,26 @@
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
-const fs = require('fs');
-const { PDFDocument } = require('pdf-lib');
 const QRCode = require('qrcode');
+const fs = require('fs');
+const os = require('os');
+const { PDFDocument } = require('pdf-lib');
 
 const router = express.Router();
+
+/* ====== Get local IP for QR url - start ====== */
+function getLocalIp() {
+  const interfaces = os.networkInterfaces();
+  for (const name of Object.keys(interfaces)) {
+    for (const iface of interfaces[name]) {
+      if (iface.family === 'IPv4' && !iface.internal) {
+        return iface.address;
+      }
+    }
+  }
+  return 'localhost';
+}
+/* ====== Get local IP for QR url - end ====== */
 
 /* ====== Directory setup - start ====== */
 const baseUploadDir = path.join(__dirname, '../uploads/projects');
@@ -78,7 +93,8 @@ router.post('/', upload.array('files'), async (req, res) => {
     for (const file of files) {
       const projectDir = path.join(baseUploadDir, project);
       const filePath = path.join(projectDir, file.filename);
-      const fileUrl = `${req.protocol}://${req.get('host')}/#/scan?project=${project}&file=${file.filename}`;
+      const localIp = getLocalIp();
+      const fileUrl = `http://${localIp}:5000/#/scan?project=${project}&file=${file.filename}`;
       const qrDataUrl = await QRCode.toDataURL(fileUrl);
 
       // Embed QR code into the PDF
