@@ -19,13 +19,13 @@ function isLatestVersion(projectName, scannedFilePath) {
     const projectDir = path.join(__dirname, '../', 'uploads', 'projects', projectName);
     const allFiles = fs.readdirSync(projectDir);
 
-    console.log('Scanned timestamp', scannedTimestamp);
-    console.log('All files', allFiles);
+    // console.log('Scanned timestamp', scannedTimestamp);
+    // console.log('All files', allFiles);
 
     // Match names of files before extracting timestamps
     const matchingFiles = allFiles.filter(filename => filename.trim().toLowerCase().endsWith(suffix));
 
-    console.log('Matching files', matchingFiles);
+    // console.log('Matching files', matchingFiles);
 
     const timestamps = matchingFiles
         .map(filename => extractTimestamp(filename))
