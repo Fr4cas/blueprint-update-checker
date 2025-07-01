@@ -28,10 +28,6 @@ app.get('/', (req, res) => {
   res.send('API is running');
 });
 
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, '../client/build/index.html'));
-// });
-
 const getLocalIp = () => {
   const interfaces = os.networkInterfaces();
   for (const name of Object.keys(interfaces)) {
