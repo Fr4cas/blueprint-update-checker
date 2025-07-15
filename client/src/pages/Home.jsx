@@ -11,16 +11,9 @@ import '../css/Home.css';
 // components
 import Footer from '../components/Footer';
 
-// =========================================================================================
-// js section start
-
 function Home() {
   const navigate = useNavigate();
   const { t } = useTranslation('home')
-
-  //  js section end
-  // =========================================================================================
-  //  html section start 
 
   return (
     <>
@@ -45,8 +38,5 @@ function Home() {
     </>
   );
 }
-
-// html section end
-// =========================================================================================
 
 export default Home;
