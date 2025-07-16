@@ -8,7 +8,6 @@ const { PDFDocument } = require('pdf-lib');
 
 const router = express.Router();
 
-/* ====== Get local IP for QR url - start ====== */
 function getLocalIp() {
   const interfaces = os.networkInterfaces();
   for (const name of Object.keys(interfaces)) {
@@ -20,13 +19,9 @@ function getLocalIp() {
   }
   return 'localhost';
 }
-/* ====== Get local IP for QR url - end ====== */
 
-/* ====== Directory setup - start ====== */
 const baseUploadDir = path.join(__dirname, '../uploads/projects');
-
 if (!fs.existsSync(baseUploadDir)) fs.mkdirSync(baseUploadDir, { recursive: true });
-/* ====== Directory setup - end ====== */
 
 /* ====== Multer config - start ====== */
 const iconv = require('iconv-lite'); // decode for Chinese
@@ -51,9 +46,9 @@ const storage = multer.diskStorage({
     let properlyDecoded;
     try {
       const buffer = Buffer.from(file.originalname, 'latin1'); // interpret as ISO-8859-1
-      properlyDecoded = buffer.toString('utf8');               // convert to UTF-8
+      properlyDecoded = buffer.toString('utf8');
     } catch {
-      properlyDecoded = file.originalname; // fallback
+      properlyDecoded = file.originalname;
     }
 
     const cleaned = properlyDecoded
