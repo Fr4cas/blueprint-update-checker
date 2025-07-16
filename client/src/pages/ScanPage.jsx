@@ -1,14 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from 'react-i18next';
+import { Html5Qrcode } from 'html5-qrcode';
 
-// css
 import '../css/ScanPage.css';
 
-// Components
 import Footer from "../components/Footer";
-
-// Libraries
-import { Html5Qrcode } from 'html5-qrcode';
 
 // =========================================================================================
 // Js section start

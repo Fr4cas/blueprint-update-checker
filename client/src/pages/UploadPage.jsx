@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-// assets
 import UploadIcon from "../assets/upload.svg";
 
-// css
 import '../css/UploadPage.css'
 
-// components
 import Footer from '../components/Footer';
 
 // =========================================================================================
@@ -51,7 +48,6 @@ function UploadPage() {
             return;
         }
 
-        // Single file upload
         const formData = new FormData();
         formData.append('project', projectToSubmit);
         selectedFiles.forEach(file => {
@@ -82,7 +78,6 @@ function UploadPage() {
         }
     };
 
-    // Fetch project folders
     useEffect(() => {
         const fetchProjects = async () => {
             try {

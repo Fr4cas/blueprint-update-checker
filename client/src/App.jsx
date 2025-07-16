@@ -1,12 +1,10 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-// Pages
 import Home from './pages/Home.jsx';
 import UploadPage from './pages/UploadPage.jsx';
 import ScanPage from './pages/ScanPage.jsx';
 
-// Tell user page doesn't exist
 function NotFound() {
   return <h2 style={{ textAlign: 'center' }}>404 – Page Not Found</h2>;
 }

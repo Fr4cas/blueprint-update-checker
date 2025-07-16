@@ -3,7 +3,6 @@ const { time } = require('console');
 const fs = require('fs');
 const path = require('path');
 
-// Gets time from filename
 function extractTimestamp(filename) {
     const match = filename.match(/\d{8}_\d{6}/);
     return match ? match[0] : null;

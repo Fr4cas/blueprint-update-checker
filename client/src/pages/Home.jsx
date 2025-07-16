@@ -1,14 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-// assets
 import AttachIcon from "../assets/attach.svg";
 import ScanIcon from "../assets/scan.svg";
 
-// css
 import '../css/Home.css';
 
-// components
 import Footer from '../components/Footer';
 
 function Home() {
