@@ -8,12 +8,13 @@ const router = express.Router();
 router.post('/', (req, res) => {
   const { scannedText } = req.body;
 
+  // prevents malformed or missing data from triggering file access
   if (!scannedText || typeof scannedText !== 'string') {
     return res.status(400).json({ status: 'error', message: 'Invalid scanned data' });
   }
 
   try {
-    // Convert scanned URL to metadata filename
+    // retrieve filename from scanned PDF URL, assumes scannedText ends with the PDF filename (change here if adding more file types)
     const filename = path.basename(scannedText, '.pdf') + '.json';
     const metadataPath = path.join(__dirname, '../metadata', filename);
 
