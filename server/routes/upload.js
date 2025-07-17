@@ -8,6 +8,7 @@ const { PDFDocument } = require('pdf-lib');
 
 const router = express.Router();
 
+// get the ip to use for qr code links (used in file access URLs)
 function getLocalIp() {
   const interfaces = os.networkInterfaces();
   for (const name of Object.keys(interfaces)) {
@@ -24,7 +25,7 @@ const baseUploadDir = path.join(__dirname, '../uploads/projects');
 if (!fs.existsSync(baseUploadDir)) fs.mkdirSync(baseUploadDir, { recursive: true });
 
 /* ====== Multer config - start ====== */
-const iconv = require('iconv-lite'); // decode for Chinese
+const iconv = require('iconv-lite'); // for decoding filenames containing Chinese characters from ISO-8859-1 to UTF-8
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -42,7 +43,7 @@ const storage = multer.diskStorage({
     const now = new Date();
     const timestamp = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}_${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}${String(now.getSeconds()).padStart(2, '0')}`;
 
-    // Fix encoding: convert ISO-8859-1 → UTF-8
+    // fix encoding: convert ISO-8859-1 → UTF-8
     let properlyDecoded;
     try {
       const buffer = Buffer.from(file.originalname, 'latin1'); // interpret as ISO-8859-1
@@ -51,6 +52,7 @@ const storage = multer.diskStorage({
       properlyDecoded = file.originalname;
     }
 
+    // normalize and sanitize filename to avoid invalid characters and ensure consistency
     const cleaned = properlyDecoded
       .normalize('NFC')
       .trim()
