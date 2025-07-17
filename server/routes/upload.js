@@ -81,6 +81,10 @@ router.post('/', upload.array('files'), async (req, res) => {
     const { project } = req.body;
     const files = req.files;
 
+
+    // Re-validate project name even though Multer does this earlier
+    // protects against bypass attempts and ensures stability
+    // in case of misconfigured middleware or future refactors
     if (!files || files.length === 0 || !project || /[<>:"\/\\|?*\x00-\x1F]/.test(project.trim())) {
       return res.status(400).json({ status: 'error', message: 'Missing or invalid files or project name.' });
     }
