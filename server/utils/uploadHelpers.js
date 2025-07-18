@@ -16,4 +16,8 @@ function getLocalIp() {
   return 'localhost';
 }
 
-module.exports = { getLocalIp };
+// Base upload directory setup
+const baseUploadDir = path.join(__dirname, '../uploads/projects');
+if (!fs.existsSync(baseUploadDir)) fs.mkdirSync(baseUploadDir, { recursive: true });
+
+module.exports = { getLocalIp, baseUploadDir };

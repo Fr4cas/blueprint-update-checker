@@ -5,12 +5,9 @@ const QRCode = require('qrcode');
 const fs = require('fs');
 const os = require('os');
 const { PDFDocument } = require('pdf-lib');
-const { getLocalIp } = require("../utils/uploadHelpers")
+const { getLocalIp, baseUploadDir } = require("../utils/uploadHelpers")
 
 const router = express.Router();
-
-const baseUploadDir = path.join(__dirname, '../uploads/projects');
-if (!fs.existsSync(baseUploadDir)) fs.mkdirSync(baseUploadDir, { recursive: true });
 
 /* ====== Multer config - start ====== */
 const iconv = require('iconv-lite'); // for decoding filenames containing Chinese characters from ISO-8859-1 to UTF-8
