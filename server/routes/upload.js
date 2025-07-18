@@ -6,7 +6,7 @@ const fs = require('fs');
 const os = require('os');
 const { PDFDocument } = require('pdf-lib');
 
-const { getLocalIp, baseUploadDir, sanitizeFilename, createMutlerStorage } = require("../utils/uploadHelpers")
+const { getLocalIp, baseUploadDir, createMutlerStorage } = require("../utils/uploadHelpers")
 
 const router = express.Router();
 
