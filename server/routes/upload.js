@@ -5,21 +5,9 @@ const QRCode = require('qrcode');
 const fs = require('fs');
 const os = require('os');
 const { PDFDocument } = require('pdf-lib');
+const { getLocalIp } = require("../utils/uploadHelpers")
 
 const router = express.Router();
-
-// get the ip to use for qr code links (used in file access URLs)
-function getLocalIp() {
-  const interfaces = os.networkInterfaces();
-  for (const name of Object.keys(interfaces)) {
-    for (const iface of interfaces[name]) {
-      if (iface.family === 'IPv4' && !iface.internal) {
-        return iface.address;
-      }
-    }
-  }
-  return 'localhost';
-}
 
 const baseUploadDir = path.join(__dirname, '../uploads/projects');
 if (!fs.existsSync(baseUploadDir)) fs.mkdirSync(baseUploadDir, { recursive: true });
