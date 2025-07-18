@@ -5,16 +5,12 @@ const QRCode = require('qrcode');
 const fs = require('fs');
 const os = require('os');
 const { PDFDocument } = require('pdf-lib');
-
 const { getLocalIp, baseUploadDir, createMutlerStorage } = require("../utils/uploadHelpers")
 
 const router = express.Router();
-
-/* ====== Multer config - start ====== */
-const iconv = require('iconv-lite'); // for decoding filenames containing Chinese characters from ISO-8859-1 to UTF-8
-
 const storage = createMutlerStorage();
 
+/* ====== File type checking - start ====== */
 const fileFilter = (req, file, cb) => {
   if (file.mimetype !== 'application/pdf') {
     return cb(new Error('Only PDF files are allowed'), false);
@@ -23,7 +19,7 @@ const fileFilter = (req, file, cb) => {
 };
 
 const upload = multer({ storage, fileFilter });
-/* ====== Multer config - end ====== */
+/* ====== File type checking - end ====== */
 
 /* ====== Upload endpoint - start ====== */
 router.post('/', upload.array('files'), async (req, res) => {
