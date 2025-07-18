@@ -1,4 +1,5 @@
 const path = require('path');
+const multer = require('multer');
 const fs = require('fs');
 const os = require('os');
 const iconv = require('iconv-lite');
@@ -39,4 +40,28 @@ function sanitizeFilename(originalname) {
         .replace(/\.+$/, '');
 }
 
-module.exports = { getLocalIp, baseUploadDir, sanitizeFilename };
+// Wraps the destination and filename logic together (multer config)
+function createMutlerStorage() {
+    return multer.diskStorage({
+        destination: (req, file, cb) => {
+            const project = req.body.project;
+            if (!project || /[<>:"\/\\|?*\x00-\x1F]/.test(project.trim())) {
+                return cb(new Error('Project not specified or invalid'), null);
+            }
+            const projectDir = path.join(baseUploadDir, project);
+            if (!fs.existsSync(projectDir)) {
+                fs.mkdirSync(projectDir, { recursive: true });
+            }
+            cb(null, projectDir);
+        },
+        filename: (req, file, cb) => {
+            const now = new Date();
+            const timestamp = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}_${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}${String(now.getSeconds()).padStart(2, '0')}`;
+            const cleaned = sanitizeFilename(file.originalname);
+            const uniqueName = `${timestamp}_${cleaned}`;
+            cb(null, uniqueName);
+        }
+    });
+}
+
+module.exports = { getLocalIp, baseUploadDir, sanitizeFilename, createMutlerStorage };

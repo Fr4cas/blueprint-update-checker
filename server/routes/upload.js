@@ -6,33 +6,14 @@ const fs = require('fs');
 const os = require('os');
 const { PDFDocument } = require('pdf-lib');
 
-const { getLocalIp, baseUploadDir, sanitizeFilename } = require("../utils/uploadHelpers")
+const { getLocalIp, baseUploadDir, sanitizeFilename, createMutlerStorage } = require("../utils/uploadHelpers")
 
 const router = express.Router();
 
 /* ====== Multer config - start ====== */
 const iconv = require('iconv-lite'); // for decoding filenames containing Chinese characters from ISO-8859-1 to UTF-8
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const project = req.body.project;
-    if (!project || /[<>:"\/\\|?*\x00-\x1F]/.test(project.trim())) {
-      return cb(new Error('Project not specified or invalid'), null);
-    }
-    const projectDir = path.join(baseUploadDir, project);
-    if (!fs.existsSync(projectDir)) {
-      fs.mkdirSync(projectDir, { recursive: true });
-    }
-    cb(null, projectDir);
-  },
-  filename: (req, file, cb) => {
-    const now = new Date();
-    const timestamp = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}_${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}${String(now.getSeconds()).padStart(2, '0')}`;
-    const cleaned = sanitizeFilename(file.originalname);
-    const uniqueName = `${timestamp}_${cleaned}`;
-    cb(null, uniqueName);
-  }
-});
+const storage = createMutlerStorage();
 
 const fileFilter = (req, file, cb) => {
   if (file.mimetype !== 'application/pdf') {
