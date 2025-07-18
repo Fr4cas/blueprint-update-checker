@@ -5,7 +5,8 @@ const QRCode = require('qrcode');
 const fs = require('fs');
 const os = require('os');
 const { PDFDocument } = require('pdf-lib');
-const { getLocalIp, baseUploadDir } = require("../utils/uploadHelpers")
+
+const { getLocalIp, baseUploadDir, sanitizeFilename } = require("../utils/uploadHelpers")
 
 const router = express.Router();
 
@@ -27,24 +28,7 @@ const storage = multer.diskStorage({
   filename: (req, file, cb) => {
     const now = new Date();
     const timestamp = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}_${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}${String(now.getSeconds()).padStart(2, '0')}`;
-
-    // fix encoding: convert ISO-8859-1 → UTF-8
-    let properlyDecoded;
-    try {
-      const buffer = Buffer.from(file.originalname, 'latin1'); // interpret as ISO-8859-1
-      properlyDecoded = buffer.toString('utf8');
-    } catch {
-      properlyDecoded = file.originalname;
-    }
-
-    // normalize and sanitize filename to avoid invalid characters and ensure consistency
-    const cleaned = properlyDecoded
-      .normalize('NFC')
-      .trim()
-      .replace(/\s+/g, '')
-      .replace(/[<>:"\/\\|?*\x00-\x1F]/g, '')
-      .replace(/\.+$/, '');
-
+    const cleaned = sanitizeFilename(file.originalname);
     const uniqueName = `${timestamp}_${cleaned}`;
     cb(null, uniqueName);
   }
