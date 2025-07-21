@@ -10,12 +10,11 @@ const { getLocalIp, baseUploadDir, createMutlerStorage } = require("../utils/upl
 const router = express.Router();
 const storage = createMutlerStorage();
 
-/* ====== File type checking - start ====== */
 const fileFilter = (req, file, cb) => {
-  const allowedTypes = ['application/pdf', 'application/acad', 'application/x-acad', 'application/autocad_dwg', 
+  const allowedTypes = ['application/pdf', 'application/acad', 'application/x-acad', 'application/autocad_dwg',
     'application/x-dwg', 'image/vnd.dwg', 'application/octet-stream'];
 
-  // reject upload if not one of the allowed types
+  // reject upload if not one of the allowed mime types
   if (!allowedTypes.includes(file.mimetype)) {
     console.log(`Rejected file: ${file.originalname}`);
     console.log(`MIME type received: ${file.mimetype}`);
@@ -25,14 +24,12 @@ const fileFilter = (req, file, cb) => {
 };
 
 const upload = multer({ storage, fileFilter });
-/* ====== File type checking - end ====== */
 
 /* ====== Upload endpoint - start ====== */
 router.post('/', upload.array('files'), async (req, res) => {
   try {
     const { project } = req.body;
     const files = req.files;
-
 
     // Re-validate project name even though Multer does this earlier
     // protects against bypass attempts and ensures stability
@@ -49,23 +46,34 @@ router.post('/', upload.array('files'), async (req, res) => {
       const localIp = getLocalIp();
       const fileUrl = `http://${localIp}:5000/#/scan?project=${project}&file=${file.filename}`;
       const qrDataUrl = await QRCode.toDataURL(fileUrl);
+      const isPDF = file.mimetype === 'application/pdf';
+      const isDWG = file.mimetype.includes('dwg') || file.originalname.endsWith('.dwg')
 
-      // Embed QR code into the PDF
-      const existingPdfBytes = fs.readFileSync(filePath);
-      const pdfDoc = await PDFDocument.load(existingPdfBytes);
-      const pngImage = await pdfDoc.embedPng(qrDataUrl);
-      const page = pdfDoc.getPages()[0];
-      const { width, height } = page.getSize();
+      if (isPDF) {
+        // Embed QR code into the PDF
+        const existingPdfBytes = fs.readFileSync(filePath);
+        const pdfDoc = await PDFDocument.load(existingPdfBytes);
+        const pngImage = await pdfDoc.embedPng(qrDataUrl);
+        const page = pdfDoc.getPages()[0];
+        const { width, height } = page.getSize();
 
-      page.drawImage(pngImage, {
-        x: width - 100,
-        y: 50,
-        width: 80,
-        height: 80
-      });
+        page.drawImage(pngImage, {
+          x: width - 100,
+          y: 50,
+          width: 80,
+          height: 80
+        });
 
-      const modifiedPdfBytes = await pdfDoc.save();
-      fs.writeFileSync(filePath, modifiedPdfBytes);
+        const modifiedPdfBytes = await pdfDoc.save();
+        fs.writeFileSync(filePath, modifiedPdfBytes);
+      } else if (isDWG) {
+        // TODO: DWG handling section
+        // console.log(`DWG file uploaded: ${file.originalname}`);
+      } else {
+        // fallback (shouldn't happen because of filter)
+        console.warn(`Unknown file type: ${file.originalname}`);
+      }
+
 
       results.push({
         status: 'success',
