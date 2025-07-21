@@ -12,8 +12,14 @@ const storage = createMutlerStorage();
 
 /* ====== File type checking - start ====== */
 const fileFilter = (req, file, cb) => {
-  if (file.mimetype !== 'application/pdf') {
-    return cb(new Error('Only PDF files are allowed'), false);
+  const allowedTypes = ['application/pdf', 'application/acad', 'application/x-acad', 'application/autocad_dwg', 
+    'application/x-dwg', 'image/vnd.dwg', 'application/octet-stream'];
+
+  // reject upload if not one of the allowed types
+  if (!allowedTypes.includes(file.mimetype)) {
+    console.log(`Rejected file: ${file.originalname}`);
+    console.log(`MIME type received: ${file.mimetype}`);
+    return cb(new Error('Only PDF or DWG files are allowed'), false);
   }
   cb(null, true);
 };
