@@ -128,7 +128,7 @@ function UploadPage() {
                         )}
 
                         <label>{t('form.fileLabel')}</label>
-                        <input type="file" accept="application/pdf" onChange={handleFileChange} multiple />
+                        <input type="file" accept=".pdf,.dwg,application/pdf,application/acad,application/x-acad,application/dwg,application/x-dwg,image/vnd.dwg" onChange={handleFileChange} multiple />
                     </div>
 
                     <button type="submit" disabled={selectedFiles.length === 0}>
