@@ -14,7 +14,15 @@ A lightweight web app that ensures construction workers always access the **late
 - **Project Selection UI**: Users can select from existing projects or create a new one during upload.
 - **Simple Web Interface**: Optimized for desktop, tablet, and on site mobile use.
 - **Multilingual Support**: Interface supports both **English** and **Traditional Chinese**.
-- **Local File Management**: Operates without reliance on third party APIs for file handling or version control.
+- **Local File Management**: Operates entirely on a local server with project-organized folders.
+
+---
+
+## System Overview
+
+1. Upload PDF via web form → Server stores PDF → QR code is embedded.
+2. Worker scans QR code → Web app checks against latest version stored locally.
+3. Status is shown: Up-to-date / Outdated.
 
 ---
 
