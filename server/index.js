@@ -9,7 +9,7 @@ const os = require('os');
 const uploadRoute = require('./routes/upload');
 const scanRoute = require('./routes/scan');
 const projectsRoute = require('./routes/projects');
-const compareRoute = require('./routes/compareRoute')
+const compareRoute = require('./routes/compare')
 const displayRoute = require('./routes/display')
 
 const app = express();
