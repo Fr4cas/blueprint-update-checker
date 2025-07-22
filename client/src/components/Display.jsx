@@ -1,4 +1,12 @@
+import { useState, useEffect } from "react";
+
 function Display() {
+    const [projects, setProjects] = useState([])
+
+    useEffect(() => {
+        
+    })
+
     return (
         <>
         <div className="project-display">
