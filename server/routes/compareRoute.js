@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const { isLatestVersion } = require('../utils/compare');
+const { isLatestVersion } = require('../utils/compareUtils');
 
 const router = express.Router();
 
