@@ -10,6 +10,7 @@ const uploadRoute = require('./routes/upload');
 const scanRoute = require('./routes/scan');
 const projectsRoute = require('./routes/projects');
 const compareRoute = require('./routes/compareRoute')
+const displayRoute = require('./routes/display')
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -25,6 +26,7 @@ app.use('/upload', uploadRoute);
 app.use('/scan', scanRoute);
 app.use('/projects', projectsRoute);
 app.use('/compare', compareRoute);
+app.use('/display', displayRoute);
 
 app.get('/', (req, res) => {
   res.send('API is running');
