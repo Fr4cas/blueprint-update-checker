@@ -6,6 +6,7 @@ import ScanIcon from "../assets/scan.svg";
 
 import '../css/Home.css';
 
+import Display from '../components/Display'
 import Footer from '../components/Footer';
 
 function Home() {
@@ -30,6 +31,7 @@ function Home() {
         </div>
       </div>
       <div>
+        <Display />
         <Footer />
       </div>
     </>
