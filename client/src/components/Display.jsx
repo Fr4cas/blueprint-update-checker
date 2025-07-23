@@ -4,8 +4,17 @@ function Display() {
     const [projects, setProjects] = useState([])
 
     useEffect(() => {
-        
-    })
+        fetch("/display")
+        .then((res) => res.json())
+        .then((data) => {
+            if ( data.status === "success") {
+                setProjects(data.projects);
+            } else {
+                console.error("Error fetching projects:", data.message);
+            }
+        })
+        .catch((err) => console.error("Fetch failed:", err));
+    }, []);
 
     return (
         <>
