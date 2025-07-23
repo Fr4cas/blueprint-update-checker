@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 function Display() {
-    const [projects, setProjects] = useState([])
+    const [projects, setProjects] = useState([]);
 
     useEffect(() => {
         fetch("/display")
@@ -20,10 +20,15 @@ function Display() {
         <>
             <div className="project-display">
                 <ul>
-                    <li>{projects[0]?.project || "Project not found"}</li>
-                    {projects[0]?.files.map((file, index) => (
-                        <li key={index}>{file}</li>
-                    ))};
+                    {/* Checks if project folders exist and add fallback to prevent crashes */}
+                    {projects[0] ? (
+                        <>
+                            <li>{projects[0].project}</li>
+                            {projects[0].files}
+                        </>
+                    ) : (
+                        <li>Project not found</li>
+                    )}
                 </ul>
             </div>
         </>
