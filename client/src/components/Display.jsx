@@ -20,7 +20,7 @@ function Display() {
         <>
         <div className="project-display">
             <ul>
-                <li>{projects[0]?.project}</li>
+                <li>{projects[0]?.project || "Project not found"}</li>
                 <li>this is where the files will display</li>
             </ul>
         </div>
