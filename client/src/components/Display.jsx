@@ -22,20 +22,25 @@ function Display() {
     return (
         <>
             <div className="display">
-                Currently uploaded files
+                <h2>Currently uploaded files</h2>
             </div>
             <div className="project-display">
                 <ul>
                     {/* Checks if project folders exist and add fallback to prevent crashes */}
-                    {projects[0] ? (
-                        <>
-                            <li>{projects[0].project}</li>
-                            {(showAll ? projects[0].files : projects[0].files.slice(0, 3)).map((file, index) => (
-                                <li key={index}>{file}</li>))}
-                            <button onClick={() => setShowAll(!showAll)}>
-                                {showAll ? "SHOW LESS" : "SHOW MORE"}
-                            </button>
-                        </>
+                    {projects.length > 0 ? (
+                        projects.map((project, i) => (
+                            <li key={i}>
+                                {project.project}
+                            </li>
+                        ))
+                        // <>
+                        //     {/* <li>{projects[0].project}</li>
+                        //     {(showAll ? projects[0].files : projects[0].files.slice(0, 3)).map((file, index) => (
+                        //         <li key={index}>{file}</li>))} */}
+                        //     <button onClick={() => setShowAll(!showAll)}>
+                        //         {showAll ? "SHOW LESS" : "SHOW MORE"}
+                        //     </button>
+                        // </>
                     ) : (
                         <li>Project not found</li>
                     )}
