@@ -4,7 +4,7 @@ import "../css/Display.css";
 
 function Display() {
     const [projects, setProjects] = useState([]);
-    const [showAll, setShowAll] = useState(false);
+    const [showAll, setShowAll] = useState({});
 
     useEffect(() => {
         fetch("/display")
@@ -36,16 +36,11 @@ function Display() {
                                         <li key={index}>{file}</li>
                                     ))}
                                 </ul>
+                                <button onClick={() => setShowAll(prev => ({ ...prev, [i]: !prev[i] }))}>
+                                    {showAll[i] ? "SHOW LESS" : "SHOW MORE"}
+                                </button>
                             </li>
                         ))
-                        // <>
-                        //     {/* <li>{projects[0].project}</li>
-                        //     {(showAll ? projects[0].files : projects[0].files.slice(0, 3)).map((file, index) => (
-                        //         <li key={index}>{file}</li>))} */}
-                        //     <button onClick={() => setShowAll(!showAll)}>
-                        //         {showAll ? "SHOW LESS" : "SHOW MORE"}
-                        //     </button>
-                        // </>
                     ) : (
                         <li>Project not found</li>
                     )}
