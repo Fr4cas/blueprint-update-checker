@@ -30,7 +30,12 @@ function Display() {
                     {projects.length > 0 ? (
                         projects.map((project, i) => (
                             <li key={i}>
-                                {project.project}
+                                <strong>{project.project}</strong>
+                                <ul>
+                                    {project.files.slice(0, 3).map((file, index) => (
+                                        <li key={index}>{file}</li>
+                                    ))}
+                                </ul>
                             </li>
                         ))
                         // <>
