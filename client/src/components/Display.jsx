@@ -32,7 +32,7 @@ function Display() {
                             <li key={i}>
                                 <strong>{project.project}</strong>
                                 <ul>
-                                    {project.files.slice(0, 3).map((file, index) => (
+                                    {(showAll[i] ? project.files : project.files.slice(0, 3)).map((file, index) => (
                                         <li key={index}>{file}</li>
                                     ))}
                                 </ul>
