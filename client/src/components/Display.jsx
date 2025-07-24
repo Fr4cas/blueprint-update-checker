@@ -26,7 +26,8 @@ function Display() {
                     {projects[0] ? (
                         <>
                             <li>{projects[0].project}</li>
-                            {projects[0].files.slice(0,3)}
+                            {projects[0].files.slice(0,3).map((file, index) => (
+                            <li key={index}>{file}</li>))}
                         </>
                     ) : (
                         <li>Project not found</li>
