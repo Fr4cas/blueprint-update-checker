@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 
+import "../css/Display.css";
+
 function Display() {
     const [projects, setProjects] = useState([]);
 

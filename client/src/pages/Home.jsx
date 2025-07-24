@@ -29,9 +29,9 @@ function Home() {
             {t('button.scan')}
           </button>
         </div>
+        <Display />
       </div>
       <div>
-        <Display />
         <Footer />
       </div>
     </>
