@@ -26,7 +26,7 @@ function Display() {
                     {projects[0] ? (
                         <>
                             <li>{projects[0].project}</li>
-                            {projects[0].files}
+                            {projects[0].files.slice(0,3)}
                         </>
                     ) : (
                         <li>Project not found</li>
