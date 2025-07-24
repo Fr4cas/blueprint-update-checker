@@ -9,3 +9,20 @@
   list-style: none;
   padding: 0;
 }
+
+.project-display button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  border-radius: 24px;
+  color: #f5f5f5;
+  background-color: #004f83;
+  transition: background-color 0.2s ease;
+}
+
+.project-display button:hover {
+  background-color: #004370;
+}

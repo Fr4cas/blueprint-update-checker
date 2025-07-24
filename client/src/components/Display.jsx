@@ -33,7 +33,7 @@ function Display() {
                             {(showAll ? projects[0].files : projects[0].files.slice(0, 3)).map((file, index) => (
                                 <li key={index}>{file}</li>))}
                             <button onClick={() => setShowAll(!showAll)}>
-                                {showAll ? "Show less" : "Show more"}
+                                {showAll ? "SHOW LESS" : "SHOW MORE"}
                             </button>
                         </>
                     ) : (
