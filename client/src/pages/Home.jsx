@@ -30,8 +30,6 @@ function Home() {
           </button>
         </div>
         <Display />
-      </div>
-      <div>
         <Footer />
       </div>
     </>

@@ -161,7 +161,8 @@ function UploadPage() {
                         </div>
                     )}
                 </div>
-
+            </div>
+            <div>
                 <Footer />
             </div>
         </>
