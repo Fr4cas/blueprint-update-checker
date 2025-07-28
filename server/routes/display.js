@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
 
     try {
         const projects = fs.readdirSync(projectsPath, { withFileTypes: true })
-            .filter(dirent => dirent.isDirectory() && dirent.name !== '@Recycle')
+            .filter(dirent => dirent.isDirectory() && dirent.name !== '@Recycle') // filter out folders not to display (@Recycle is part of QNAP NAS)
             .map(dirent => {
                 const projectName = dirent.name;
                 const projectFiles = fs.readdirSync(path.join(projectsPath, projectName));
