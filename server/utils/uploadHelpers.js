@@ -18,7 +18,7 @@ function getLocalIp() {
 }
 
 // Base upload directory setup
-const baseUploadDir = path.join(__dirname, '../uploads/projects');
+const baseUploadDir = 'Z:\\'; // path.join(__dirname, '../uploads/projects');
 if (!fs.existsSync(baseUploadDir)) fs.mkdirSync(baseUploadDir, { recursive: true });
 
 // normalize and sanitize filename to avoid invalid characters and ensure consistency
