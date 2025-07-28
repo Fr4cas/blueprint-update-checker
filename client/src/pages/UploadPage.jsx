@@ -162,7 +162,7 @@ function UploadPage() {
                     )}
                 </div>
             </div>
-            <div>
+            <div id='footer'>
                 <Footer />
             </div>
         </>
