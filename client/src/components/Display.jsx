@@ -24,7 +24,7 @@ function Display() {
     return (
         <>
             <div className="display">
-                <h2>Currently uploaded files</h2>
+                <h2>{t('display')}</h2>
             </div>
             <div className="project-display">
                 <ul>
@@ -44,7 +44,7 @@ function Display() {
                             </li>
                         ))
                     ) : (
-                        <li>Project not found</li>
+                        <li>{t('noProject')}</li>
                     )}
                 </ul>
             </div>

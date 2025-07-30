@@ -4,5 +4,7 @@
    "button": {
       "more": "SHOW MORE",
       "less": "SHOW LESS"
-   }
+   },
+   "display": "Currently uploaded files",
+   "noProject": "Projects not found"
 }
