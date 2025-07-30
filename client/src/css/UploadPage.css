@@ -126,18 +126,40 @@
 }
 
 /* Download */
+.download-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: center;
+  margin-top: 1rem;
+  word-break: break-word;
+  padding: 0 1rem;
+}
+
 .download-button {
-  padding: 0.75rem;
+  display: inline-block;
+  width: 100%;
+  max-width: 400px;
+  padding: 0.6rem 1.2rem;
   text-decoration: none;
   font-size: 1rem;
   font-weight: bold;
   color: #fff;
   background-color: #004f83;
-  border: none;
+  border-radius: 6px;
   cursor: pointer;
+  text-align: center;
   transition: background-color 0.3s ease;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
+.download-button:hover {
+  background-color: #0066aa;
+}
+
+/* New Project */
 .new-project-input {
   margin-top: 10px;
   padding: 8px 12px;

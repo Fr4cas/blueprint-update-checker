@@ -18,7 +18,7 @@ function UploadPage() {
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [statusMessage, setStatusMessage] = useState('');
     const [statusType, setStatusType] = useState('');
-    const [downloadUrl, setDownloadUrl] = useState('');
+    const [downloadUrl, setDownloadUrl] = useState([]);
 
     const { t } = useTranslation('upload');
 
@@ -66,15 +66,15 @@ function UploadPage() {
             if (data.status === 'success') {
                 setStatusType('success');
                 setStatusMessage('Upload Successful!');
-                setDownloadUrl(data.fileUrl);
+                setDownloadUrl(data.files.map(f => f.fileUrl));
                 setSelectedFiles([]);
             } else {
                 setStatusType('error');
-                setStatusMessage(data.message || 'Upload Failed. Make sure file is a PDF.');
+                setStatusMessage(data.message || 'Upload Failed. Make sure file is a PDF or DWG.');
             }
         } catch (err) {
             setStatusType('error');
-            setStatusMessage('Error During Upload. Make sure file is a PDF.');
+            setStatusMessage('Error During Upload. Make sure file is a PDF or DWG.');
         }
     };
 
@@ -138,10 +138,14 @@ function UploadPage() {
                 </form>
 
                 <div className="after-form">
-                    {downloadUrl && (
-                        <a href={downloadUrl} download className="download-button">
-                            {t('after.download')}
-                        </a>
+                    {downloadUrl.length > 0 && (
+                        <div className="download-buttons">
+                            {downloadUrl.map((url, idx) => (
+                                <a key={idx} href={url} download className="download-button">
+                                    {t('after.download')} {idx + 1}
+                                </a>
+                            ))}
+                        </div>
                     )}
 
                     {statusMessage && (
