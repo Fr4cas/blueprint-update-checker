@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from 'react-i18next';
 
 import "../css/Display.css";
 
 function Display() {
+    const { t } = useTranslation('common');
     const [projects, setProjects] = useState([]);
     const [showAll, setShowAll] = useState({});
 
@@ -37,7 +39,7 @@ function Display() {
                                     ))}
                                 </ul>
                                 <button onClick={() => setShowAll(prev => ({ ...prev, [i]: !prev[i] }))}>
-                                    {showAll[i] ? "SHOW LESS" : "SHOW MORE"}
+                                    {showAll[i] ? t('button.more') : t('button.less')}
                                 </button>
                             </li>
                         ))

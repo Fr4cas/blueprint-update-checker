@@ -1,4 +1,8 @@
 {
    "version": "Version: {{version}}",
-   "language": "Language"
+   "language": "Language",
+   "button": {
+      "more": "SHOW MORE",
+      "less": "SHOW LESS"
+   }
 }
