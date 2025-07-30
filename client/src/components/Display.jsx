@@ -39,7 +39,7 @@ function Display() {
                                     ))}
                                 </ul>
                                 <button onClick={() => setShowAll(prev => ({ ...prev, [i]: !prev[i] }))}>
-                                    {showAll[i] ? t('button.more') : t('button.less')}
+                                    {showAll[i] ? t('button.less') : t('button.more')}
                                 </button>
                             </li>
                         ))
