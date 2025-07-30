@@ -1,4 +1,10 @@
 {
   "version": "版本：{{version}}",
-  "language": "語言"
+  "language": "語言",
+  "button": {
+    "more": "顯示更多",
+    "less": "顯示較少"
+  },
+  "display": "目前已上傳的檔案",
+  "noProject": "找不到專案"
 }
