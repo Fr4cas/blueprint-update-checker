@@ -141,7 +141,7 @@ function UploadPage() {
                     {downloadUrl.length > 0 && (
                         <div className="download-buttons">
                             {downloadUrl.map((url, idx) => (
-                                <a key={idx} href={url} download className="download-button">
+                                <a key={idx} href={url} target="_blank" rel="noopener noreferrer" download className="download-button">
                                     {t('after.download')} {idx + 1}
                                 </a>
                             ))}
