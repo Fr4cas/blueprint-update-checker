@@ -44,8 +44,8 @@ router.post('/', upload.array('files'), async (req, res) => {
       const projectDir = path.join(baseUploadDir, project);
       const filePath = path.join(projectDir, file.filename);
       const localIp = getLocalIp();
-      const fileUrl = `http://${localIp}:5000/#/scan?project=${project}&file=${file.filename}`;
-      const qrDataUrl = await QRCode.toDataURL(fileUrl);
+      const fileUrl = `http://${localIp}:5000/static/${project}/${file.filename}`;
+      const qrDataUrl = await QRCode.toDataURL(`http://${localIp}:5000/#/scan?project=${project}&file=${file.filename}`);
       const isPDF = file.mimetype === 'application/pdf';
       const isDWG = file.mimetype.includes('dwg') || file.originalname.endsWith('.dwg')
 
