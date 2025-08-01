@@ -30,7 +30,7 @@ function Display() {
             const base = match ? match[2] : file;
 
             // if base name doesn't exist create new array to object using its name
-            if(!groups[base]) {
+            if (!groups[base]) {
                 groups[base] = [];
             }
             // else add file to group count
@@ -52,9 +52,17 @@ function Display() {
                             <li key={i}>
                                 <strong>{project.project}</strong>
                                 <ul>
-                                    {(showAll[i] ? project.files : project.files.slice(0, 3)).map((file, index) => (
-                                        <li key={index}>{file}</li>
-                                    ))}
+                                    {(() => {
+                                        const grouped = groupFiles(project.files);
+                                        const entries = Object.entries(grouped);
+                                        const visibleEntries = showAll[i] ? entries : entries.slice(0, 3);
+
+                                        return visibleEntries.map(([base, files], index) => (
+                                            <li key={index}>
+                                                {base} - {files.length} version(s)
+                                            </li>
+                                        ));
+                                    })()}
                                 </ul>
                                 <button onClick={() => setShowAll(prev => ({ ...prev, [i]: !prev[i] }))}>
                                     {showAll[i] ? t('button.less') : t('button.more')}
