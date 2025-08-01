@@ -1,11 +1,11 @@
 {
-    "title": "Attach QR Code",
+    "title": "Upload and Attach QR",
     "form": {
         "projectLabel": "Choose Project:",
         "selectPlaceholder": "Select",
         "newProjectOption": "New Project",
         "newProjectPlaceholder": "Enter new project name",
-        "fileLabel": "Choose PDF:",
+        "fileLabel": "Choose PDF or DWG:",
         "submit": "Upload Blueprint"
     },
     "after": {

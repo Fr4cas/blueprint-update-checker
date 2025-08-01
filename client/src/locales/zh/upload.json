@@ -1,11 +1,11 @@
 {
-    "title": "附加 QR 碼",
+    "title": "上傳, 附加 QR 碼",
     "form": {
         "projectLabel": "選擇專案：",
         "selectPlaceholder": "請選擇",
         "newProjectOption": "新增專案",
         "newProjectPlaceholder": "輸入新專案名稱",
-        "fileLabel": "選擇 PDF 檔案：",
+        "fileLabel": "選擇 PDF 或 DWG 檔案：",
         "submit": "上傳藍圖"
     },
     "after": {
