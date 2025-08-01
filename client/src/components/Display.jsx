@@ -50,7 +50,9 @@ function Display() {
                     {projects.length > 0 ? (
                         projects.map((project, i) => (
                             <li key={i}>
+                                {/* maps out projects */}
                                 <strong>{project.project}</strong>
+                                {/* maps out file groups and only displays first 3 initially */}
                                 <ul>
                                     {(() => {
                                         const grouped = groupFiles(project.files);
@@ -59,11 +61,12 @@ function Display() {
 
                                         return visibleEntries.map(([base, files], index) => (
                                             <li key={index}>
-                                                {base} - {files.length} version(s)
+                                                {base} - <strong>{files.length} version(s)</strong>
                                             </li>
                                         ));
                                     })()}
                                 </ul>
+                                {/* button to toggle more or less files */}
                                 <button onClick={() => setShowAll(prev => ({ ...prev, [i]: !prev[i] }))}>
                                     {showAll[i] ? t('button.less') : t('button.more')}
                                 </button>
