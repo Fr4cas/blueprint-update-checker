@@ -21,6 +21,24 @@ function Display() {
             .catch((err) => console.error("Fetch failed:", err));
     }, []);
 
+    function groupFiles(files) {
+        const groups = {};
+
+        // for each file check the name using regex
+        files.forEach(file => {
+            const match = file.match(/^(\d{8}_\d{6})_(.+)$/);
+            const base = match ? match[2] : file;
+
+            // if base name doesn't exist create new array to object using its name
+            if(!groups[base]) {
+                groups[base] = [];
+            }
+            // else add file to group count
+            groups[base].push(file);
+        });
+        return groups;
+    }
+
     return (
         <>
             <div className="display">
