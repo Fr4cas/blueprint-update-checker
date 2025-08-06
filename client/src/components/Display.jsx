@@ -27,14 +27,27 @@ function Display() {
         // for each file check the name using regex
         files.forEach(file => {
             const match = file.match(/^(\d{8}_\d{6})_(.+)$/);
+            const timestamp = match ? match[1] : null;
             const base = match ? match[2] : file;
 
             // if base name doesn't exist create new array to object using its name
             if (!groups[base]) {
-                groups[base] = [];
+                groups[base] = {
+                    files: [],
+                    current: null,
+                    latest: null
+                };
             }
             // else add file to group count
-            groups[base].push(file);
+            groups[base].files.push(file);
+
+            if (timestamp) {
+                const newer = !groups[base].latest || timestamp > groups[base].latest;
+                if (newer) {
+                    groups[base].current = file;
+                    groups[base].latest = timestamp;
+                }
+            }
         });
         return groups;
     }
@@ -59,10 +72,17 @@ function Display() {
                                         const entries = Object.entries(grouped);
                                         const visibleEntries = showAll[i] ? entries : entries.slice(0, 3);
 
-                                        return visibleEntries.map(([base, files], index) => (
+                                        return visibleEntries.map(([base, group], index) => (
                                             <li key={index}>
-                                                {base} - <strong>{files.length} version(s)</strong>
+                                                <div>{base} - <strong>{group.files.length} version(s)</strong></div>
+                                                <ul>
+                                                    <li>
+                                                        {group.current}
+                                                            <strong> (latest)</strong>
+                                                    </li>
+                                                </ul>
                                             </li>
+
                                         ));
                                     })()}
                                 </ul>
