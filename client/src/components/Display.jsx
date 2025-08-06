@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 
 import "../css/Display.css";
 
+const IP_URL = process.env.REACT_APP_IP_URL;
+
 function Display() {
     const { t } = useTranslation('common');
     const [projects, setProjects] = useState([]);
@@ -77,8 +79,10 @@ function Display() {
                                                 <div>{base} - <strong>{group.files.length} version(s)</strong></div>
                                                 <ul>
                                                     <li>
-                                                        {group.current}
-                                                            <strong> (latest)</strong>
+                                                        <a href={`${IP_URL}/${project.project}/${group.current}`} download>
+                                                            {group.current}
+                                                        </a>
+                                                        <strong> (latest)</strong>
                                                     </li>
                                                 </ul>
                                             </li>
