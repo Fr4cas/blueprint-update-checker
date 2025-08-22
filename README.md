@@ -68,4 +68,15 @@ _Archived Trimble Connect SDK code_ remains under the [Trimble Internal Use Lice
 
 ## Status
 
-**Actively in development** — Upgraded to a full stack architecture with NAS integration for centralized blueprint management.
+**Actively in development** — Upgraded to a full stack architecture, with plans to deploy the entire app to run directly on a QNAP NAS using Docker for centralized blueprint management.
+
+---
+
+## QNAP NAS Deployment (In Progress)
+
+Currently working toward deploying the app on a **QNAP TS-253D** NAS usnig Docker.
+
+**Deployment Plan**
+- Considering a multi container setup for better separation of frontend and backend
+- Will adjust code to upload directly to the NAS file system instead of relying on  host mapped folder
+- Goal is to run the full app entirely through the NAS
