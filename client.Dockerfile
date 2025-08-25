@@ -2,5 +2,5 @@
 FROM node:22.2.0
 
 # Goes to the app directory
-WORKDIR /BLUEPRINTUPDATECHECKER
+WORKDIR /app
 
